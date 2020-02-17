@@ -1,13 +1,10 @@
 package gui;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.util.ArrayList;
 
 public final class Window {
@@ -35,29 +32,6 @@ public final class Window {
 
 	public Window() {
 		scene = new Scene(this) {
-			BufferedImage img;
-
-			{
-				try {
-					img = ImageIO.read(new File("C:/Users/supernova/Desktop/bg.jpg"));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-
-			@Override
-			public void paint(Graphics2D g) {
-				double scaleX = getSize().getWidth() / img.getWidth();
-				double scaleY = getSize().getHeight() / img.getHeight();
-				double scale = Math.max(scaleX, scaleY);
-				AffineTransform at = new AffineTransform();
-				at.translate(getSize().getWidth() / 2, getSize().getHeight() / 2);
-				at.scale(scale, scale);
-				at.translate(img.getWidth() / -2d, img.getHeight() / -2d);
-				g.drawImage(img, at, null);
-				g.setColor(new Color(0, 0, 0, 170));
-				g.fillRect(0, 0, getSize().width, getSize().height);
-			}
 		};
 		initFrame();
 		frame.setVisible(true);

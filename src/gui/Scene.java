@@ -19,6 +19,7 @@ public abstract class Scene {
 	}
 
 	public void paint(Graphics2D g) {
+		Theme.paintBackground(g, getSize());
 		forEachElements(element -> element.paint(g));
 	}
 
