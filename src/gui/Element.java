@@ -86,4 +86,13 @@ public abstract class Element {
 
 	protected void keyTyped(KeyEvent e) {
 	}
+
+	public static int centerStringX(Graphics2D g, String s, int x) {
+		return x - g.getFontMetrics().stringWidth(s) / 2;
+	}
+
+	public static int centerStringY(Graphics2D g, String s, int y) {
+		FontMetrics fm = g.getFontMetrics();
+		return y + (fm.getAscent() - fm.getDescent()) / 2;
+	}
 }

@@ -21,6 +21,12 @@ public class HoverCalc {
 		animatingElement = new AnimatingElement(animating);
 	}
 
+	public HoverCalc(long hoverTransitionPeriod, Element animating, int expand) {
+		this(hoverTransitionPeriod);
+		Runnable repaint = () -> animating.repaint(animating.getBounds().getRectangleExpanded(expand));
+		animatingElement = new AnimatingElement(repaint);
+	}
+
 	public HoverCalc(long hoverTransitionPeriod, Runnable animate) {
 		this(hoverTransitionPeriod);
 		animatingElement = new AnimatingElement(animate);

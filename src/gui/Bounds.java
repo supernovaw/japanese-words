@@ -73,4 +73,8 @@ public final class Bounds {
 	public Rectangle getRectangle() {
 		return new Rectangle(xCalculated, yCalculated, width, height);
 	}
+
+	public Rectangle getRectangleExpanded(int exp) {
+		return new Rectangle(xCalculated - exp, yCalculated - exp, width + 2 * exp, height + 2 * exp);
+	}
 }
