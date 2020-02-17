@@ -1,5 +1,7 @@
 package gui;
 
+import gui.elements.Button;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -32,6 +34,10 @@ public final class Window {
 
 	public Window() {
 		scene = new Scene(this) {
+			{
+				addElement(new Button("Click me", () -> System.out.println("I'm working"),
+						this, new Bounds(0, 0, 125, 30, 0, 0)));
+			}
 		};
 		initFrame();
 		frame.setVisible(true);
