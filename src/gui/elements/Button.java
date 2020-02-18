@@ -24,24 +24,35 @@ public class Button extends Element {
 		super(container, bounds);
 		run = r;
 		this.text = text;
-		hoverCalc = new HoverCalc(200, this, EXPAND);
+		hoverCalc = new HoverCalc(120, this, EXPAND);
 		holdCalc = new HoverCalc(150, this, EXPAND);
+	}
+
+	private void click() {
+		run.run();
 	}
 
 	@Override
 	protected void paint(Graphics2D g) {
-		g.setColor(Theme.getFG());
-		g.setFont(Theme.getUIFont());
-
-		double holdPhase = holdCalc.getCubicOut();
-		double hoverPhase = hoverCalc.getCubicInOut();
+		// fill inside with BG color and this alpha
+		int fillBgAlpha = 50;
 
 		RoundRectangle2D buttonForm = getButtonForm();
 		// shrunk version is used to clear inner button part without removing counter line
 		RoundRectangle2D buttonFormShrunk = getButtonFormShrunk();
 
+		int fillBG = Theme.getBG().getRGB();
+		// cut alpha part and insert 'fillBgAlpha'
+		fillBG = (fillBG & 0xffffff) | (fillBgAlpha << 24);
+		g.setColor(new Color(fillBG, true));
+		g.fill(buttonForm);
+
+		double holdPhase = holdCalc.getCubicOut();
+		double hoverPhase = hoverCalc.getCubicOut();
+
 		// paint text and fill (in filled areas, text is engraved)
 		if (holdPhase == 0) { // just paint button text
+			g.setColor(Theme.getFG());
 			paintText(g);
 		} else { // fill button to animate holding
 			// new image instance is used to paint text as transparent overlay (engrave)
@@ -51,7 +62,6 @@ public class Button extends Element {
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 			g2.translate(EXPAND - x(), EXPAND - y());
 			g2.setColor(Theme.getFG());
-			g2.setFont(Theme.getUIFont());
 
 			paintText(g2);
 
@@ -72,6 +82,7 @@ public class Button extends Element {
 
 		// paint button outline which extends when hovered
 		if (hoverPhase == 0) { // not hovered, 1px outline
+			g.setColor(Theme.getFG());
 			g.draw(buttonForm);
 		} else {
 			// new image instance is used to cut middle part
@@ -95,6 +106,7 @@ public class Button extends Element {
 	}
 
 	private void paintText(Graphics2D g) {
+		g.setFont(Theme.getUIFont());
 		g.drawString(text, centerStringX(g, text, x() + w() / 2), centerStringY(g, text, y() + h() / 2));
 	}
 
@@ -124,7 +136,7 @@ public class Button extends Element {
 			return;
 		if (hold) {
 			hold = false;
-			run.run();
+			click();
 		}
 		holdCalc.setHovered(false);
 	}
