@@ -8,7 +8,7 @@ import java.io.File;
 
 public final class Theme {
 	private static Color background = Color.black, foreground = Color.white;
-	private static double backgroundDim = 0.75;
+	private static double backgroundDim = 0.25;
 	private static BufferedImage bgImage;
 
 	private static Font fontEnglish;
@@ -16,8 +16,8 @@ public final class Theme {
 
 	static {
 		try {
-			bgImage = ImageIO.read(new File("C:/Users/supernova/Desktop/bg.jpg"));
-			fontEnglish = Font.createFont(Font.TRUETYPE_FONT, new File("C:/Users/supernova/Desktop/SFProText-Regular.ttf"));
+			bgImage = ImageIO.read(new File("assets/bg.jpg"));
+			fontEnglish = Font.createFont(Font.TRUETYPE_FONT, new File("assets/fonts/SFProText-Light.ttf"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
