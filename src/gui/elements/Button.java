@@ -5,6 +5,8 @@ import gui.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Area;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
@@ -24,7 +26,7 @@ public class Button extends Element {
 		super(container, bounds);
 		run = r;
 		this.text = text;
-		hoverCalc = new HoverCalc(120, this, EXPAND);
+		hoverCalc = new HoverCalc(120, this, EXPAND + 1);
 		holdCalc = new HoverCalc(150, this, EXPAND);
 	}
 
@@ -34,91 +36,68 @@ public class Button extends Element {
 
 	@Override
 	protected void paint(Graphics2D g) {
-		// fill inside with BG color and this alpha
-		int fillBgAlpha = 50;
-
-		RoundRectangle2D buttonForm = getButtonForm();
-		// shrunk version is used to clear inner button part without removing counter line
-		RoundRectangle2D buttonFormShrunk = getButtonFormShrunk();
-
-		int fillBG = Theme.getBG().getRGB();
-		// cut alpha part and insert 'fillBgAlpha'
-		fillBG = (fillBG & 0xffffff) | (fillBgAlpha << 24);
-		g.setColor(new Color(fillBG, true));
-		g.fill(buttonForm);
+		fillBackground(g);
+		g.setColor(Theme.getFG());
 
 		double holdPhase = holdCalc.getCubicOut();
 		double hoverPhase = hoverCalc.getCubicOut();
 
 		// paint text and fill (in filled areas, text is engraved)
+		Area area = new Area();
 		if (holdPhase == 0) { // just paint button text
-			g.setColor(Theme.getFG());
-			paintText(g);
+			area.add(getTextArea(g));
 		} else { // fill button to animate holding
-			// new image instance is used to paint text as transparent overlay (engrave)
-			BufferedImage img = new BufferedImage(w() + EXPAND * 2,
-					h() + EXPAND * 2, BufferedImage.TYPE_INT_ARGB);
-			Graphics2D g2 = (Graphics2D) img.getGraphics();
-			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-			g2.translate(EXPAND - x(), EXPAND - y());
-			g2.setColor(Theme.getFG());
+			Area textArea = getTextArea(g);
 
-			paintText(g2);
+			double fillWidth = holdPhase * w() / 2;
+			Rectangle2D.Double fillRect = new Rectangle2D.Double(x() + w() / 2d - fillWidth - 1,
+					y() - 1, fillWidth * 2 + 1, h() + 1);
+			Area fillArea = new Area(fillRect); // the rectangle which gets wider when holding
 
-			double fillW = holdPhase * w() / 2; // fill button when holding
-			g2.fill(new Rectangle2D.Double(x() + w() / 2d - fillW, y(), fillW * 2, h()));
+			Area innerText = new Area(textArea);
+			innerText.intersect(fillArea); // the only part of text within animating rectangle
 
-			// set clip to only engrave text in middle (filled)
-			// part without touching not yet filled part
-			g2.setClip(new Rectangle2D.Double(x() + w() / 2d - fillW, y(), fillW * 2, h()));
-			g2.setComposite(AlphaComposite.DstOut);
-			paintText(g2);
-
-			// button is drawn but edges are not round; round edges
-			alphaMask(img, buttonForm, EXPAND - x(), EXPAND - y());
-
-			g.drawImage(img, x() - EXPAND, y() - EXPAND, null);
+			area.add(textArea);
+			area.add(fillArea);
+			area.subtract(innerText);
 		}
+		// round corners and cut text in case it's out of bounds
+		area.intersect(new Area(getButtonForm()));
 
-		// paint button outline which extends when hovered
-		if (hoverPhase == 0) { // not hovered, 1px outline
-			g.setColor(Theme.getFG());
-			g.draw(buttonForm);
-		} else {
-			// new image instance is used to cut middle part
-			// and not to change stroke in general Graphics2D
-			BufferedImage img = new BufferedImage(w() + EXPAND * 2,
-					h() + EXPAND * 2, BufferedImage.TYPE_INT_ARGB);
-			Graphics2D g2 = (Graphics2D) img.getGraphics();
-			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-			g2.translate(EXPAND - x(), EXPAND - y());
+		// button outline (1.0f is for not hovering)
+		double strokeOuterWidth = hoverPhase * EXPAND + 1f;
+		// stroke width is multiplied by 2 because it counts for both inner and outer
+		Stroke stroke = new BasicStroke((float) strokeOuterWidth * 2f);
+		Area outerStroke = new Area(stroke.createStrokedShape(getButtonForm()));
+		// remove inner part of stroke
+		outerStroke.subtract(new Area(getButtonForm())); // remove inner stroke
+		area.add(outerStroke);
 
-			g2.setColor(Theme.getFG());
-			g2.setStroke(new BasicStroke(1f + (float) hoverPhase * EXPAND * 2));
-			g2.draw(buttonForm);
-
-			// the outline is expanded both outside and inside, remove inside filling
-			g2.setComposite(AlphaComposite.DstOut);
-			g2.fill(buttonFormShrunk);
-
-			g.drawImage(img, x() - EXPAND, y() - EXPAND, null);
-		}
+		g.fill(area);
 	}
 
-	private void paintText(Graphics2D g) {
+	private void fillBackground(Graphics2D g) {
+		int fillBgAlpha = 50;
+		int fillBG = Theme.getBG().getRGB();
+		// cut alpha part and insert 'fillBgAlpha'
+		fillBG = (fillBG & 0xffffff) | (fillBgAlpha << 24);
+		g.setColor(new Color(fillBG, true));
+		g.fill(getButtonForm());
+	}
+
+	private Area getTextArea(Graphics2D g) {
 		g.setFont(Theme.getUIFont());
-		g.drawString(text, centerStringX(g, text, x() + w() / 2), centerStringY(g, text, y() + h() / 2));
+		FontMetrics fontMetrics = g.getFontMetrics();
+		Area area = new Area(g.getFont().createGlyphVector(fontMetrics.getFontRenderContext(), text).getOutline());
+		int x = centerStringX(g, text, x() + w() / 2);
+		int y = centerStringY(g, text, y() + h() / 2);
+		area.transform(AffineTransform.getTranslateInstance(x, y));
+		return area;
 	}
 
 	private RoundRectangle2D.Double getButtonForm() {
 		return new RoundRectangle2D.Double(
 				x(), y(), w() - 1, h() - 1, RND_CORNERS, RND_CORNERS);
-	}
-
-
-	private RoundRectangle2D.Double getButtonFormShrunk() {
-		return new RoundRectangle2D.Double(
-				x() + 1, y() + 1, w() - 2, h() - 2, RND_CORNERS, RND_CORNERS);
 	}
 
 	@Override
