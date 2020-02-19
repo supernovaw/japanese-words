@@ -3,6 +3,7 @@ package gui;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 
@@ -20,7 +21,21 @@ public abstract class Scene {
 
 	public void paint(Graphics2D g) {
 		Theme.paintBackground(g, getSize());
-		forEachElements(element -> element.paint(g));
+
+		/* elements are drawn in a separate image to let them use
+		 * AlphaCompositing without affecting background and without
+		 * necessity for them to use separate BufferedImages for it
+		 */
+		Dimension size = getSize();
+		BufferedImage elementsImage = new BufferedImage(size.width, size.height, BufferedImage.TYPE_INT_ARGB);
+		Graphics2D elementsGraphics = elementsImage.createGraphics();
+
+		elementsGraphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				g.getRenderingHint(RenderingHints.KEY_ANTIALIASING));
+		elementsGraphics.setClip(g.getClip());
+		forEachElements(element -> element.paint(elementsGraphics));
+
+		g.drawImage(elementsImage, 0, 0, null);
 	}
 
 	public final Dimension getSize() {
