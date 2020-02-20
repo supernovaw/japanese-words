@@ -7,7 +7,7 @@ public final class Bounds {
 	private final int width, height;
 	private final int alignX, alignY; // -1 = left/top, 0 = center, 1 = right/bottom
 
-	private Dimension containerSize;
+	private Dimension containerSize = Window.INITIAL_PANEL_SIZE;
 	private int xCalculated, yCalculated;
 
 	public Bounds(int x, int y, int w, int h, int alignX, int alignY) {
@@ -22,6 +22,7 @@ public final class Bounds {
 		height = h;
 		this.alignX = alignX;
 		this.alignY = alignY;
+		calculatePosition();
 	}
 
 	public Bounds(int x, int y, int w, int h) {

@@ -13,6 +13,7 @@ public final class Window {
 	// amount of ms to wait to hide mouse after last move
 	private static final int HIDE_MOUSE_AFT_INACTIVE = 3000;
 	private static final int ROUND_CORNERS = 20;
+	public static final Dimension INITIAL_PANEL_SIZE = new Dimension(1280, 720);
 
 	private static final Cursor HIDDEN_CURSOR;
 
@@ -47,7 +48,7 @@ public final class Window {
 		frame = new JFrame();
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-		frame.setSize(1280, 720);
+		frame.setSize(INITIAL_PANEL_SIZE);
 		frame.setMinimumSize(new Dimension(400, 400));
 		frame.setLocationRelativeTo(null);
 
