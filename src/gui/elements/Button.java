@@ -90,7 +90,7 @@ public class Button extends Element {
 		FontMetrics fontMetrics = g.getFontMetrics();
 		Area area = new Area(g.getFont().createGlyphVector(fontMetrics.getFontRenderContext(), text).getOutline());
 		int x = centerStringX(g, text, x() + w() / 2);
-		int y = centerStringY(g, text, y() + h() / 2);
+		int y = centerStringY(g, y() + h() / 2);
 		area.transform(AffineTransform.getTranslateInstance(x, y));
 		return area;
 	}

@@ -88,11 +88,20 @@ public abstract class Element {
 	}
 
 	public static int centerStringX(Graphics2D g, String s, int x) {
-		return x - g.getFontMetrics().stringWidth(s) / 2;
+		return alignStringX(g, s, x, 0, 0);
 	}
 
-	public static int centerStringY(Graphics2D g, String s, int y) {
+	public static int centerStringY(Graphics2D g, int y) {
 		FontMetrics fm = g.getFontMetrics();
 		return y + (fm.getAscent() - fm.getDescent()) / 2;
+	}
+
+	public static int alignStringX(Graphics2D g, String s, int x, int w, int align) {
+		switch (align) {
+			case -1: return x;
+			case 0: return x + (w - g.getFontMetrics().stringWidth(s)) / 2;
+			case 1: return x + w - g.getFontMetrics().stringWidth(s);
+			default: throw new IllegalArgumentException("for align " + align);
+		}
 	}
 }
