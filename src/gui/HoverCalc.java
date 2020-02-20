@@ -4,8 +4,12 @@ package gui;
  * a button to make it glow or go black. Lets the animation be stopped
  * and turned the other way while not completed. Contains ease functions
  * to make animations look smoother
+ * Note: only shuts AnimatingElement repaints when requesting
+ * getPhase (or one of ease functions). As long as getPhase isn't run
+ * by anybody, repaints don't stop. (This causes no problems for
+ * elements that always have getPhase as a part of paint method.)
  */
-public class HoverCalc {
+public final class HoverCalc {
 	private static final int AFT_STABILIZED_SPARE_DELAY = 200;
 	private final long hoverTransitionPeriod;
 	private boolean hovered;
@@ -32,20 +36,18 @@ public class HoverCalc {
 		animatingElement = new AnimatingElement(animate);
 	}
 
-	private static double easeCubicInOut(double x) {
-		if (x == .5)
-			return .5;
+	public static double easeCubicInOut(double x) {
 		if (x < 0.5)
-			return .5 * Math.pow(2 * x, 3);
+			return 4 * Math.pow(x, 3);
 		else
-			return 1 - easeCubicInOut(1 - x);
+			return 1 - 4 * Math.pow(1 - x, 3);
 	}
 
-	private static double easeCubicOut(double x) {
+	public static double easeCubicOut(double x) {
 		return 1 - Math.pow(1 - x, 3);
 	}
 
-	private static double easeSine(double x) {
+	public static double easeSine(double x) {
 		return (1 + Math.sin(Math.PI * (x - .5))) / 2;
 	}
 
