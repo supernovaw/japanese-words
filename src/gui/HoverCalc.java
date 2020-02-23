@@ -10,7 +10,7 @@ package gui;
  * elements that always have getPhase as a part of paint method.)
  */
 public final class HoverCalc {
-	private static final int AFT_STABILIZED_SPARE_DELAY = 200;
+	public static final int AFT_STABILIZED_SPARE_DELAY = 200;
 	private final long hoverTransitionPeriod;
 	private boolean hovered;
 	private long anchorTimePoint;
