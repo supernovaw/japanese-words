@@ -87,6 +87,14 @@ public class Checkbox extends Element {
 
 	// cuts a path so that only 'part' fraction of its length is left starting from array start
 	private Path2D getCutPath(Point2D[] path, double part) {
+		Path2D result = new Path2D.Double(Path2D.WIND_NON_ZERO, path.length);
+
+		if (part == 1) {
+			for (int i = 1; i < path.length; i++)
+				result.append(new Line2D.Double(path[i - 1], path[i]), true);
+			return result;
+		}
+
 		double len = 0;
 		double[] dist = new double[path.length - 1];
 		for (int i = 0; i < path.length - 1; i++) {
@@ -94,7 +102,7 @@ public class Checkbox extends Element {
 			len += dist[i]; // find total length
 		}
 		len *= part; // find length needed
-		Path2D result = new Path2D.Double(Path2D.WIND_NON_ZERO, path.length);
+
 		for (int i = 0; len != 0; i++) {
 			if (len >= dist[i]) // if it's not the last segment of path, insert full line
 				result.append(new Line2D.Double(path[i], path[i + 1]), true);
