@@ -125,32 +125,4 @@ public class Button extends Element {
 			holdCalc.setHovered(false); // when dragging outside bounds, lose focus (hold)
 		}
 	}
-
-	/* only leaves those pixels of img, that are contained by
-	 * shape (shifted by args)
-	 * used to replace masking by ineffective setClip
-	 * and prevent creation of artifacts on right-bottom corner
-	 */
-	private static void alphaMask(BufferedImage img, Shape shape, int xTranslate, int yTranslate) {
-		BufferedImage mask = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_INT_RGB);
-		Graphics2D g = (Graphics2D) mask.getGraphics();
-		g.translate(xTranslate, yTranslate);
-		g.fill(shape);
-
-		for (int x = 0; x < img.getWidth(); x++) {
-			for (int y = 0; y < img.getHeight(); y++) {
-				int origColor = img.getRGB(x, y);
-				int maskColor = mask.getRGB(x, y);
-
-				int maskAlpha = maskColor & 0xff;
-				int origAlpha = (origColor & 0xff000000) >>> 24;
-				int alpha = Math.min(maskAlpha, origAlpha);
-
-				int result = origColor & 0xffffff;
-				result |= alpha << 24;
-
-				img.setRGB(x, y, result);
-			}
-		}
-	}
 }
