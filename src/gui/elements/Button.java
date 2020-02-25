@@ -35,7 +35,9 @@ public class Button extends Element {
 
 	@Override
 	protected void paint(Graphics2D g) {
-		fillBackground(g);
+		g.setColor(Theme.getBG(50)); // fill background with this alpha
+		g.fill(getButtonForm());
+
 		g.setColor(Theme.getFG());
 
 		double holdPhase = holdCalc.getCubicOut();
@@ -73,15 +75,6 @@ public class Button extends Element {
 		area.add(outerStroke);
 
 		g.fill(area);
-	}
-
-	private void fillBackground(Graphics2D g) {
-		int fillBgAlpha = 50;
-		int fillBG = Theme.getBG().getRGB();
-		// cut alpha part and insert 'fillBgAlpha'
-		fillBG = (fillBG & 0xffffff) | (fillBgAlpha << 24);
-		g.setColor(new Color(fillBG, true));
-		g.fill(getButtonForm());
 	}
 
 	private Area getTextArea(Graphics2D g) {

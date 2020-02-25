@@ -78,7 +78,10 @@ public class HorizontalRadioButtons extends Element {
 
 		int translateX = x(), translateY = y(); // fix to make sure translation is done equally in both directions
 		g.translate(translateX, translateY);
-		fillBackground(g);
+
+		g.setColor(Theme.getBG(50)); // fill background with this alpha
+		g.fill(roundBounds);
+
 		g.setColor(Theme.getFG());
 		g.fill(buttonArea);
 
@@ -129,15 +132,6 @@ public class HorizontalRadioButtons extends Element {
 		selectionAreas = new Area[buttonsAmt];
 		for (int i = 0; i < buttonsAmt; i++) // pre-render for cases with no animation
 			selectionAreas[i] = paint(i);
-	}
-
-	private void fillBackground(Graphics2D g) {
-		int fillBgAlpha = 50;
-		int fillBG = Theme.getBG().getRGB();
-		// cut alpha part and insert 'fillBgAlpha'
-		fillBG = (fillBG & 0xffffff) | (fillBgAlpha << 24);
-		g.setColor(new Color(fillBG, true));
-		g.fill(roundBounds);
 	}
 
 	// paint transition animation between current and previously selected buttons
