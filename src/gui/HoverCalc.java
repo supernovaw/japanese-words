@@ -72,6 +72,10 @@ public final class HoverCalc {
 		return hovered;
 	}
 
+	public void setInitially(boolean hovered) {
+		this.hovered = hovered;
+	}
+
 	public double getPhase() {
 		long passed = System.currentTimeMillis() - anchorTimePoint;
 		double f;
