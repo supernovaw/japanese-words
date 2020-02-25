@@ -20,7 +20,6 @@ public class Button extends Element {
 	private String text;
 	private Runnable run;
 	private HoverCalc hoverCalc, holdCalc;
-	private boolean hold;
 
 	public Button(String text, Runnable r, Scene container, Bounds bounds) {
 		super(container, bounds);
@@ -106,18 +105,17 @@ public class Button extends Element {
 			return;
 		if (!getButtonForm().contains(e.getPoint()))
 			return;
-		holdCalc.setHovered(hold = true);
+		holdCalc.setHovered(true);
 	}
 
 	@Override
 	protected void mouseReleased(MouseEvent e) {
 		if (!SwingUtilities.isLeftMouseButton(e))
 			return;
-		if (hold) {
-			hold = false;
+		if (holdCalc.isHovered()) {
+			holdCalc.setHovered(false);
 			click();
 		}
-		holdCalc.setHovered(false);
 	}
 
 	@Override
@@ -131,7 +129,7 @@ public class Button extends Element {
 		if (!SwingUtilities.isLeftMouseButton(e))
 			return;
 		if (!getButtonForm().contains(e.getPoint())) {
-			holdCalc.setHovered(hold = false); // when dragging outside bounds, lose focus (hold)
+			holdCalc.setHovered(false); // when dragging outside bounds, lose focus (hold)
 		}
 	}
 

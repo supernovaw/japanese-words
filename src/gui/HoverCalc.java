@@ -11,6 +11,7 @@ package gui;
  */
 public final class HoverCalc {
 	public static final int AFT_STABILIZED_SPARE_DELAY = 200;
+
 	private final long hoverTransitionPeriod;
 	private boolean hovered;
 	private long anchorTimePoint;
@@ -65,6 +66,10 @@ public final class HoverCalc {
 		} else { // change animation direction on the run
 			anchorTimePoint = 2 * t - anchorTimePoint - hoverTransitionPeriod;
 		}
+	}
+
+	public boolean isHovered() {
+		return hovered;
 	}
 
 	public double getPhase() {
