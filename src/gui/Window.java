@@ -5,6 +5,8 @@ import gui.elements.Button;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.font.FontRenderContext;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -14,6 +16,7 @@ public final class Window {
 	private static final int HIDE_MOUSE_AFT_INACTIVE = 3000;
 	private static final int ROUND_CORNERS = 20;
 	public static final Dimension INITIAL_PANEL_SIZE = new Dimension(1280, 720);
+	public static FontRenderContext fontRenderContext;
 
 	private static final Cursor HIDDEN_CURSOR;
 
@@ -34,12 +37,8 @@ public final class Window {
 	private boolean mouseHid;
 
 	public Window() {
-		scene = new Scene(this) {
-			{
-				addElement(new Button("Click me", () -> System.out.println("I'm working"),
-						this, new Bounds(0, 0, 125, 30, 0, 0)));
-			}
-		};
+		fontRenderContext = new FontRenderContext(null, true, true);
+
 		initFrame();
 		frame.setVisible(true);
 	}
@@ -61,7 +60,7 @@ public final class Window {
 
 		content = new JPanel() {
 			{ // add listeners on object creation
-				// 9 Swing listeners
+				// Swing mouse listeners
 				MouseAdapter mouseAdapter = new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
@@ -110,6 +109,7 @@ public final class Window {
 			protected void paintComponent(Graphics g) {
 				Graphics2D g2d = (Graphics2D) g;
 				g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+				g2d.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
 
 				// fill black background because it's originally transparent
 				g2d.setColor(Color.black);
