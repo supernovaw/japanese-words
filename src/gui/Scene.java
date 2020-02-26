@@ -1,13 +1,21 @@
 package gui;
 
+import gui.scenes.SceneExample;
+import gui.scenes.SceneMain;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 
 public abstract class Scene {
+	// List of Scenes used in the app
+	public static SceneMain sceneMain;
+	public static SceneExample sceneExample;
+
 	private final Window holder;
 	private final ArrayList<Element> elements = new ArrayList<>();
 
@@ -19,9 +27,8 @@ public abstract class Scene {
 		elements.forEach(consumer);
 	}
 
-	public void paint(Graphics2D g) {
-		Theme.paintBackground(g, getSize());
-
+	// paints elements transformed in case second argument isn't null
+	public void paint(Graphics2D g, AffineTransform transform) {
 		/* elements are drawn in a separate image to let them use
 		 * AlphaCompositing without affecting background and without
 		 * necessity for them to use separate BufferedImages for it
@@ -30,11 +37,18 @@ public abstract class Scene {
 		BufferedImage elementsImage = new BufferedImage(size.width, size.height, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D elementsGraphics = elementsImage.createGraphics();
 
+		// assign RenderingHints of g to elementsGraphics
 		elementsGraphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				g.getRenderingHint(RenderingHints.KEY_ANTIALIASING));
-		elementsGraphics.setClip(g.getClip());
-		forEachElements(element -> element.paint(elementsGraphics));
+		elementsGraphics.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS,
+				g.getRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS));
 
+		if (transform != null)
+			elementsGraphics.transform(transform);
+		else
+			elementsGraphics.setClip(g.getClip());
+
+		forEachElements(element -> element.paint(elementsGraphics));
 		g.drawImage(elementsImage, 0, 0, null);
 	}
 
@@ -54,11 +68,16 @@ public abstract class Scene {
 		return holder.getMousePosition();
 	}
 
+	protected final void changeScene(Scene s) {
+		holder.changeScene(s);
+	}
+
 	protected final void repaint(Rectangle area) {
 		holder.repaint(area);
 	}
 
 	protected void onDisplay() {
+		onContainerSizeChange(getSize());
 		forEachElements(Element::onDisplay);
 	}
 
