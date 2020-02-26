@@ -39,10 +39,14 @@ public class WindowTopBar extends Element {
 
 		Runnable repaint = () -> containerWindow.repaint(getBounds().getRectangle());
 		hoverCalc = new HoverCalc(200, repaint);
+		hoverCalc.setDisplayed(true);
 		int buttonsHoldAnimationPeriod = 100;
 		holdButton1 = new HoverCalc(buttonsHoldAnimationPeriod, repaint);
 		holdButton2 = new HoverCalc(buttonsHoldAnimationPeriod, repaint);
 		holdButton3 = new HoverCalc(buttonsHoldAnimationPeriod, repaint);
+		holdButton1.setDisplayed(true);
+		holdButton2.setDisplayed(true);
+		holdButton3.setDisplayed(true);
 	}
 
 	// decreases RGB values by portion of 'b' and applies alpha parameter

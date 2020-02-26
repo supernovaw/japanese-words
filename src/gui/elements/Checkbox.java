@@ -165,4 +165,17 @@ public class Checkbox extends Element {
 			hold = false; // when dragging outside bounds, lose focus (hold)
 		}
 	}
+
+	@Override
+	protected void onDisplay() {
+		hoverCalc.setDisplayed(true);
+		activationCalc.setDisplayed(true);
+	}
+
+	@Override
+	protected void onShut() {
+		hoverCalc.shut();
+		activationCalc.shut();
+		hold = false;
+	}
 }

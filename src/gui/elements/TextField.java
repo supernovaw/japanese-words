@@ -466,4 +466,18 @@ public class TextField extends Element {
 		}
 		return index;
 	}
+
+	@Override
+	protected void onDisplay() {
+		hintDisplayCalc.setDisplayed(true);
+		focusCalc.setDisplayed(true);
+	}
+
+	@Override
+	protected void onShut() {
+		hintDisplayCalc.shut();
+		focusCalc.shut();
+		onFocusChange();
+		textFadeFinished = true;
+	}
 }

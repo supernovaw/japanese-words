@@ -31,7 +31,9 @@ public class WindowResizeArea extends Element {
 		this.containerWindow = containerWindow;
 		Runnable repaint = () -> containerWindow.repaint(getBounds().getRectangle());
 		hoverCalc = new HoverCalc(100, repaint);
+		hoverCalc.setDisplayed(true);
 		holdCalc = new HoverCalc(200, repaint);
+		holdCalc.setDisplayed(true);
 	}
 
 	@Override

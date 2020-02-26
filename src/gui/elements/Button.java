@@ -118,4 +118,16 @@ public class Button extends Element {
 			holdCalc.setHovered(false); // when dragging outside bounds, lose focus (hold)
 		}
 	}
+
+	@Override
+	protected void onDisplay() {
+		hoverCalc.setDisplayed(true);
+		holdCalc.setDisplayed(true);
+	}
+
+	@Override
+	protected void onShut() {
+		hoverCalc.shut();
+		holdCalc.shut();
+	}
 }

@@ -58,6 +58,14 @@ public abstract class Scene {
 		holder.repaint(area);
 	}
 
+	protected void onDisplay() {
+		forEachElements(Element::onDisplay);
+	}
+
+	protected void onShut() {
+		forEachElements(Element::onShut);
+	}
+
 	// 9 Swing listeners
 	protected void mousePressed(MouseEvent e) {
 		elements.forEach(element -> element.mousePressed(e));

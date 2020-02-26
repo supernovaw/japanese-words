@@ -5,7 +5,6 @@ import gui.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
@@ -247,5 +246,18 @@ public class HorizontalRadioButtons extends Element {
 	@Override
 	protected void mouseDragged(MouseEvent e) {
 		mouseMoved(e);
+	}
+
+	@Override
+	protected void onDisplay() {
+		hoverCalc.setDisplayed(true);
+		animatingElement.setDisplayed(true);
+	}
+
+	@Override
+	protected void onShut() {
+		hoverCalc.shut();
+		animatingElement.setDisplayed(false);
+		animationFinished = true;
 	}
 }

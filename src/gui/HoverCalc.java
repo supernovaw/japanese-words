@@ -76,6 +76,15 @@ public final class HoverCalc {
 		this.hovered = hovered;
 	}
 
+	public void setDisplayed(boolean displayed) {
+		animatingElement.setDisplayed(displayed);
+	}
+
+	public void shut() { // for most cases
+		animatingElement.setDisplayed(false);
+		setHovered(false);
+	}
+
 	public double getPhase() {
 		long passed = System.currentTimeMillis() - anchorTimePoint;
 		double f;

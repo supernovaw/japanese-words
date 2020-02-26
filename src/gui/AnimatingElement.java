@@ -13,6 +13,7 @@ public class AnimatingElement {
 
 	private final Runnable repaint;
 	private boolean active;
+	private boolean displayed; // if not displayed, do not repaint anyway
 
 	public AnimatingElement(Runnable repaint) {
 		this.repaint = repaint;
@@ -34,8 +35,10 @@ public class AnimatingElement {
 					e.printStackTrace();
 				}
 
-				for (AnimatingElement element : animatingElements) {
-					if (element.active) element.repaint.run();
+				for (int i = 0; i < animatingElements.size(); i++) {
+					AnimatingElement element = animatingElements.get(i);
+					if (element.active && element.displayed)
+						element.repaint.run();
 				}
 			}
 		});
@@ -59,5 +62,9 @@ public class AnimatingElement {
 
 	public void setActive(boolean active) {
 		this.active = active;
+	}
+
+	public void setDisplayed(boolean displayed) {
+		this.displayed = displayed;
 	}
 }

@@ -61,6 +61,14 @@ public abstract class Element {
 		container.repaint(area);
 	}
 
+	// enable animations that were possibly disabled in onShut
+	protected void onDisplay() {
+	}
+
+	// when scene changes and the element is no longer on screen, it should stop all animations
+	protected void onShut() {
+	}
+
 	// 9 Swing listeners
 	protected void mousePressed(MouseEvent e) {
 	}
