@@ -475,7 +475,6 @@ public class TextField extends Element {
 
 	@Override
 	protected void onShut() {
-		hintDisplayCalc.shut();
 		focusCalc.shut();
 		onFocusChange();
 		textFadeFinished = true;

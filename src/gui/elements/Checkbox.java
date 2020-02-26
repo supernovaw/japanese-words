@@ -175,7 +175,7 @@ public class Checkbox extends Element {
 	@Override
 	protected void onShut() {
 		hoverCalc.shut();
-		activationCalc.shut();
+		activationCalc.setDisplayed(false);
 		hold = false;
 	}
 }
