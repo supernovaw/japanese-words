@@ -118,7 +118,7 @@ public abstract class Element {
 	}
 
 	public static double stringWidth(Graphics2D g, String s) {
-		return g.getFontMetrics().getStringBounds(s, g).getWidth();
+		return stringWidth(s, g.getFont());
 	}
 
 	public static double stringWidth(String s, Font font) {
