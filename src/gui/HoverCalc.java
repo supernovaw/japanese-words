@@ -48,6 +48,10 @@ public final class HoverCalc {
 		return 1 - Math.pow(1 - x, 3);
 	}
 
+	public static double easeCubicIn(double x) {
+		return Math.pow(x, 3);
+	}
+
 	public static double easeSine(double x) {
 		return (1 + Math.sin(Math.PI * (x - .5))) / 2;
 	}
@@ -118,6 +122,10 @@ public final class HoverCalc {
 
 	public double getCubicOut() {
 		return easeCubicOut(getPhase());
+	}
+
+	public double getCubicIn() {
+		return easeCubicIn(getPhase());
 	}
 
 	public double getSine() {
