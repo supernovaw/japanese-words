@@ -18,7 +18,6 @@ public class TextField extends Element {
 	private String text;
 	private int caretPos, selectionFromPos;
 	private Font font;
-	private FontMetrics fontMetrics;
 	private int slideWhenFading; // distance text slides up when fading away
 	private int caretHeight; // caret and selection height
 	private boolean hold; // for selecting text by dragging
@@ -97,12 +96,6 @@ public class TextField extends Element {
 	@Override
 	protected void paint(Graphics2D g) {
 		g.setFont(font);
-		/* fontMetrics is taken from here to match all settings.
-		 * When using new Canvas(), stringWidth value differs from
-		 * the actual width painted by drawString
-		 */
-		if (fontMetrics == null)
-			fontMetrics = g.getFontMetrics();
 
 		Shape clipBefore = g.getClip();
 		Composite compositeBefore = g.getComposite();
@@ -110,7 +103,7 @@ public class TextField extends Element {
 		paintHintText(g);
 		paintFadingText(g);
 		g.setColor(Theme.getFG());
-		g.drawString(text, x() + offsetX, centerStringY(g, y() + h() / 2)); // paint text
+		g.fill(getTextArea(text, x() + offsetX, centerStringY(g, y() + h() / 2), g)); // paint text
 
 		double focusInOut = focusCalc.getCubicInOut();
 		float focusSine = (float) focusCalc.getSine();
@@ -143,7 +136,7 @@ public class TextField extends Element {
 			return;
 		int alpha = (int) (phase * 120); // max text alpha
 		g.setColor(Theme.getFG(alpha));
-		g.drawString(hintText, x() + offsetXFixed, centerStringY(g, y() + h() / 2));
+		g.fill(getTextArea(hintText, x() + offsetXFixed, centerStringY(g, y() + h() / 2), g));
 	}
 
 	private void paintFadingText(Graphics2D g) {
@@ -155,7 +148,7 @@ public class TextField extends Element {
 				g.setColor(Theme.getFG(alpha));
 
 				int slide = (int) (slideWhenFading * HoverCalc.easeCubicOut(phase));
-				g.drawString(fadingText, x() + fadingTextOffset, centerStringY(g, y() + h() / 2) - slide);
+				g.fill(getTextArea(fadingText, x() + fadingTextOffset, centerStringY(g, y() + h() / 2) - slide, g));
 			} else if (passed > TEXT_FADE_PERIOD + HoverCalc.AFT_STABILIZED_SPARE_DELAY) {
 				textFadeFinished = true;
 				textFadeAnimate.setActive(false);
@@ -164,7 +157,7 @@ public class TextField extends Element {
 	}
 
 	private int stringWidth(String s) {
-		return fontMetrics.stringWidth(s);
+		return (int) stringWidth(s, font);
 	}
 
 	@Override

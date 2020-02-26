@@ -111,7 +111,7 @@ public class HorizontalRadioButtons extends Element {
 		margin = h() / 3;
 		int stringY = (fm.getAscent() - fm.getDescent() + h()) / 2;
 		for (int i = 0; i < buttonsAmt; i++)
-			textArea.add(getTextArea(fm, buttonsText[i], margin + getSeparatorX(i), stringY));
+			textArea.add(getTextArea(buttonsText[i], margin + getSeparatorX(i), stringY, fm.getFont()));
 
 		roundBounds = new RoundRectangle2D.Double(0, 0,
 				getSeparatorX(buttonsAmt), h() - 1, RND_CORNERS, RND_CORNERS);
@@ -162,13 +162,6 @@ public class HorizontalRadioButtons extends Element {
 		result.exclusiveOr(selectedArea); // text XOR selection rect
 		result.add(frameArea); // add outline and separating lines
 		return result;
-	}
-
-	// similar to Graphics.drawString, but applied on Area
-	private Area getTextArea(FontMetrics fm, String text, int x, int y) {
-		Area area = new Area(fm.getFont().createGlyphVector(fm.getFontRenderContext(), text).getOutline());
-		area.transform(AffineTransform.getTranslateInstance(x, y));
-		return area;
 	}
 
 	// smoothen motion of selection rectangle bounds

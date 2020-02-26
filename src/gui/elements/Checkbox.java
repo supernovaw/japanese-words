@@ -21,6 +21,7 @@ public class Checkbox extends Element {
 	private HoverCalc hoverCalc;
 	private HoverCalc activationCalc;
 	private boolean hold;
+	private Area textArea;
 
 	public Checkbox(String text, Scene container, Bounds bounds) {
 		super(container, bounds);
@@ -36,7 +37,9 @@ public class Checkbox extends Element {
 	protected void paint(Graphics2D g) {
 		g.setColor(Theme.getFG());
 		g.setFont(Theme.getUIFont());
-		g.drawString(text, x() + checkboxX + checkboxSize + 10, centerStringY(g, y() + h() / 2));
+		if (textArea == null)
+			textArea = getTextArea(text, 10 + checkboxX + checkboxSize, centerStringY(g, h() / 2), g);
+		g.fill(textArea.createTransformedArea(AffineTransform.getTranslateInstance(x(), y())));
 
 		paintBorderAndFill(g);
 

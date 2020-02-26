@@ -3,6 +3,8 @@ package gui;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Area;
 
 public abstract class Element {
 	private final Scene container;
@@ -87,7 +89,7 @@ public abstract class Element {
 	protected void keyTyped(KeyEvent e) {
 	}
 
-	public static int centerStringX(Graphics2D g, String s, int x) {
+	public static double centerStringX(Graphics2D g, String s, int x) {
 		return alignStringX(g, s, x, 0, 0);
 	}
 
@@ -96,12 +98,33 @@ public abstract class Element {
 		return y + (fm.getAscent() - fm.getDescent()) / 2;
 	}
 
-	public static int alignStringX(Graphics2D g, String s, int x, int w, int align) {
+	public static double alignStringX(Graphics2D g, String s, float x, float w, int align) {
 		switch (align) {
 			case -1: return x;
-			case 0: return x + (w - g.getFontMetrics().stringWidth(s)) / 2;
-			case 1: return x + w - g.getFontMetrics().stringWidth(s);
+			case 0:
+				return x + (w - stringWidth(g, s)) / 2f;
+			case 1:
+				return x + w - stringWidth(g, s);
 			default: throw new IllegalArgumentException("for align " + align);
 		}
+	}
+
+	public static double stringWidth(Graphics2D g, String s) {
+		return g.getFontMetrics().getStringBounds(s, g).getWidth();
+	}
+
+	public static double stringWidth(String s, Font font) {
+		return font.getStringBounds(s, Window.fontRenderContext).getWidth();
+	}
+
+	// getTextArea should be preferably used because it behaves independently from graphics transform
+	public static Area getTextArea(String text, double x, double y, Graphics2D g) {
+		return getTextArea(text, x, y, g.getFont());
+	}
+
+	public static Area getTextArea(String text, double x, double y, Font f) {
+		Area area = new Area(f.createGlyphVector(Window.fontRenderContext, text).getOutline());
+		area.transform(AffineTransform.getTranslateInstance(x, y));
+		return area;
 	}
 }

@@ -5,11 +5,9 @@ import gui.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
-import java.awt.image.BufferedImage;
 
 public class Button extends Element {
 	// corners round arc
@@ -38,6 +36,7 @@ public class Button extends Element {
 		g.setColor(Theme.getBG(50)); // fill background with this alpha
 		g.fill(getButtonForm());
 
+		g.setFont(Theme.getUIFont());
 		g.setColor(Theme.getFG());
 
 		double holdPhase = holdCalc.getCubicOut();
@@ -78,13 +77,7 @@ public class Button extends Element {
 	}
 
 	private Area getTextArea(Graphics2D g) {
-		g.setFont(Theme.getUIFont());
-		FontMetrics fontMetrics = g.getFontMetrics();
-		Area area = new Area(g.getFont().createGlyphVector(fontMetrics.getFontRenderContext(), text).getOutline());
-		int x = centerStringX(g, text, x() + w() / 2);
-		int y = centerStringY(g, y() + h() / 2);
-		area.transform(AffineTransform.getTranslateInstance(x, y));
-		return area;
+		return getTextArea(text, centerStringX(g, text, x() + w() / 2), centerStringY(g, y() + h() / 2), g);
 	}
 
 	private RoundRectangle2D.Double getButtonForm() {
