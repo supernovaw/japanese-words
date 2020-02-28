@@ -16,6 +16,7 @@ public abstract class Scene {
 	public static SceneMain sceneMain;
 	public static SceneExample sceneExample;
 
+	private static boolean displayElementsBounds = false; // for development only
 	private final Window holder;
 	private final ArrayList<Element> elements = new ArrayList<>();
 
@@ -48,7 +49,15 @@ public abstract class Scene {
 		else
 			elementsGraphics.setClip(g.getClip());
 
-		forEachElements(element -> element.paint(elementsGraphics));
+		if (displayElementsBounds) {
+			forEachElements(element -> {
+				element.paint(elementsGraphics);
+				elementsGraphics.setColor(Color.magenta);
+				elementsGraphics.drawRect(element.x(), element.y(), element.w() - 1, element.h() - 1);
+			});
+		} else {
+			forEachElements(element -> element.paint(elementsGraphics));
+		}
 		g.drawImage(elementsImage, 0, 0, null);
 	}
 
