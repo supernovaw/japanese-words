@@ -471,6 +471,7 @@ public class TextField extends Element {
 	protected void onDisplay() {
 		hintDisplayCalc.setDisplayed(true);
 		focusCalc.setDisplayed(true);
+		textFadeAnimate.setDisplayed(true);
 	}
 
 	@Override
@@ -478,5 +479,6 @@ public class TextField extends Element {
 		focusCalc.shut();
 		onFocusChange();
 		textFadeFinished = true;
+		textFadeAnimate.setDisplayed(false);
 	}
 }
