@@ -25,12 +25,12 @@ public final class Theme {
 		}
 	}
 
-	public static Color getBG() {
-		return background;
-	}
-
 	public static Color getFG() {
 		return foreground;
+	}
+
+	public static Color getBG() {
+		return background;
 	}
 
 	public static Color getFG(int withAlpha) {
@@ -41,6 +41,14 @@ public final class Theme {
 	public static Color getBG(int withAlpha) {
 		int rgb = background.getRGB() & 0xffffff;
 		return new Color(rgb | (withAlpha << 24), true);
+	}
+
+	public static Color getFG(double withAlpha) {
+		return getFG((int) (255 * withAlpha));
+	}
+
+	public static Color getBG(double withAlpha) {
+		return getBG((int) (255 * withAlpha));
 	}
 
 	public static Font getUIFont() {

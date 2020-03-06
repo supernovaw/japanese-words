@@ -47,7 +47,7 @@ public class RadioButton extends Element {
 		Area circleOutline = new Area(new BasicStroke(1f).createStrokedShape(circleShape));
 		g.fill(circleOutline); // fill the outline
 
-		g.setColor(Theme.getFG((int) (HoverCalc.easeSine(activationPhase) * 255))); // set alpha
+		g.setColor(Theme.getFG(HoverCalc.easeSine(activationPhase))); // set alpha
 		if (activationPhase == 1) {
 			g.fill(circleShape);
 		} else if (activationPhase != 0) {

@@ -134,8 +134,7 @@ public class TextField extends Element {
 		double phase = hintDisplayCalc.getSine();
 		if (phase == 0)
 			return;
-		int alpha = (int) (phase * 120); // max text alpha
-		g.setColor(Theme.getFG(alpha));
+		g.setColor(Theme.getFG(phase * 0.45));
 		g.fill(getTextArea(hintText, x() + offsetXFixed, centerStringY(g, y() + h() / 2), g));
 	}
 
