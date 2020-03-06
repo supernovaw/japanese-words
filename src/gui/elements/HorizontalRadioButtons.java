@@ -17,6 +17,7 @@ public class HorizontalRadioButtons extends Element {
 
 	private int buttonsAmt;
 	private String[] buttonsText;
+	private int align; // -1, 0, 1 for left/center/right
 
 	private int selected;
 
@@ -34,6 +35,7 @@ public class HorizontalRadioButtons extends Element {
 	private AnimatingElement animatingElement; // used to animate transition
 	private HoverCalc hoverCalc; // used to animate hovering
 
+	private int offsetX;
 	private Area[] selectionAreas; // when not animating, use pre-rendered buttons
 	private int[] textWidthSums; // used to calculate button positions (based on string widths)
 	private int margin; // margins between bounds, separators and text, based on bounds height and font size
@@ -42,10 +44,11 @@ public class HorizontalRadioButtons extends Element {
 	// area with text of all buttons located accordingly to string widths and margin, no bounds X and Y offset
 	private Area textArea;
 
-	public HorizontalRadioButtons(String[] buttonsText, Scene container, Bounds bounds) {
+	public HorizontalRadioButtons(String[] buttonsText, int align, Scene container, Bounds bounds) {
 		super(container, bounds);
 		this.buttonsText = buttonsText;
 		buttonsAmt = buttonsText.length;
+		this.align = align;
 		renderPaintingComponents();
 
 		animatingElement = new AnimatingElement(this);
@@ -103,17 +106,32 @@ public class HorizontalRadioButtons extends Element {
 		for (int i = 0, sum = 0; i < buttonsAmt; i++) {
 			sum += fm.stringWidth(buttonsText[i]);
 			textWidthSums[i + 1] = sum;
+
+		}
+		margin = h() / 3;
+
+		offsetX = 0; // getSeparatorX should be originally based on offsetX being 0
+		switch (align) {
+			case -1: // leave as 0
+				break;
+			case 0:
+				offsetX = (w() - getSeparatorX(buttonsAmt)) / 2;
+				break;
+			case 1:
+				offsetX = w() - getSeparatorX(buttonsAmt);
+				break;
+			default:
+				throw new IllegalArgumentException("for align=" + align);
 		}
 
 		textArea = new Area();
 		// size between buttons text and separator lines (or bounds left/right sides)
-		margin = h() / 3;
 		int stringY = (fm.getAscent() - fm.getDescent() + h()) / 2;
 		for (int i = 0; i < buttonsAmt; i++)
 			textArea.add(getTextArea(buttonsText[i], margin + getSeparatorX(i), stringY, fm.getFont()));
 
-		roundBounds = new RoundRectangle2D.Double(0, 0,
-				getSeparatorX(buttonsAmt), h() - 1, RND_CORNERS, RND_CORNERS);
+		roundBounds = new RoundRectangle2D.Double(offsetX, 0,
+				getSeparatorX(buttonsAmt) - offsetX, h() - 1, RND_CORNERS, RND_CORNERS);
 		frameArea = new Area(new BasicStroke(2f * (float) OUTLINE_WIDTH).createStrokedShape(roundBounds));
 		frameArea.subtract(new Area(roundBounds)); // remove inner stroke part
 
@@ -178,12 +196,12 @@ public class HorizontalRadioButtons extends Element {
 	 *  `-----------------------------------------------------`
 	 */
 	private int getSeparatorX(int i) {
-		return textWidthSums[i] + 2 * i * margin;
+		return offsetX + textWidthSums[i] + 2 * i * margin;
 	}
 
 	// reverse for getSeparatorX, returns button index
 	private int getButtonIndex(int x) {
-		if (x < 0)
+		if (x < offsetX)
 			return -1;
 		for (int i = 0; i < buttonsAmt; i++) {
 			if (x < getSeparatorX(i + 1))
