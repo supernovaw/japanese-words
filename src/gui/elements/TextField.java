@@ -10,7 +10,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 public class TextField extends Element {
-	private static final int TEXT_FADE_PERIOD = 400;
 	private static Color selectionFillColor = new Color(0x3c0078d7, true);
 
 	private int offsetXFixed; // X offset from bounds start. Letters like 'j' stick out to the left and need this gap
@@ -27,11 +26,8 @@ public class TextField extends Element {
 	private HoverCalc focusCalc;
 	private Runnable onEnter;
 
-	private String fadingText; // used by flushText()
-	private int fadingTextOffset;
-	private AnimatingElement textFadeAnimate;
-	private long textFadingSince;
-	private boolean textFadeFinished;
+	// fadingText has object parameters String (text) and int (offsetX)
+	private OneWayAnimating fadingText;
 
 	public TextField(String text, String hintText, Runnable onEnter, Scene container, Bounds bounds) {
 		super(container, bounds);
@@ -51,7 +47,7 @@ public class TextField extends Element {
 		slideWhenFading = (int) (0.7d * fontsize);
 
 		focusCalc = new HoverCalc(300, this);
-		textFadeAnimate = new AnimatingElement(() -> repaint(new Rectangle(
+		fadingText = new OneWayAnimating(400, () -> repaint(new Rectangle(
 				x(), y() - slideWhenFading, w(), h() + slideWhenFading)));
 	}
 
@@ -78,11 +74,7 @@ public class TextField extends Element {
 		String oldText = text;
 		text = "";
 		if (!oldText.isBlank()) {
-			fadingText = oldText;
-			fadingTextOffset = offsetX;
-			textFadingSince = System.currentTimeMillis();
-			textFadeFinished = false;
-			textFadeAnimate.setActive(true);
+			fadingText.animate(oldText, offsetX);
 		}
 		caretPos = selectionFromPos = 0;
 		offsetX = offsetXFixed;
@@ -139,20 +131,16 @@ public class TextField extends Element {
 	}
 
 	private void paintFadingText(Graphics2D g) {
-		if (!textFadeFinished) {
-			long passed = System.currentTimeMillis() - textFadingSince;
-			if (passed < TEXT_FADE_PERIOD) { // paint transition animation
-				double phase = (double) passed / TEXT_FADE_PERIOD;
-				int alpha = (int) (255 * HoverCalc.easeSine(1 - phase));
-				g.setColor(Theme.getFG(alpha));
+		if (fadingText.isFinished())
+			return;
 
-				int slide = (int) (slideWhenFading * HoverCalc.easeCubicOut(phase));
-				g.fill(getTextArea(fadingText, x() + fadingTextOffset, centerStringY(g, y() + h() / 2) - slide, g));
-			} else if (passed > TEXT_FADE_PERIOD + HoverCalc.AFT_STABILIZED_SPARE_DELAY) {
-				textFadeFinished = true;
-				textFadeAnimate.setActive(false);
-			}
-		}
+		String fadingString = (String) fadingText.getParameter(0);
+		int fadingTextOffset = (int) fadingText.getParameter(1);
+
+		double phase = fadingText.getPhase();
+		g.setColor(Theme.getFG(HoverCalc.easeSine(1d - phase)));
+		int slide = (int) (slideWhenFading * HoverCalc.easeCubicOut(phase));
+		g.fill(getTextArea(fadingString, x() + fadingTextOffset, centerStringY(g, y() + h() / 2) - slide, g));
 	}
 
 	private int stringWidth(String s) {
@@ -470,14 +458,13 @@ public class TextField extends Element {
 	protected void onDisplay() {
 		hintDisplayCalc.setDisplayed(true);
 		focusCalc.setDisplayed(true);
-		textFadeAnimate.setDisplayed(true);
+		fadingText.setDisplayed(true);
 	}
 
 	@Override
 	protected void onShut() {
 		focusCalc.shut();
 		onFocusChange();
-		textFadeFinished = true;
-		textFadeAnimate.setDisplayed(false);
+		fadingText.setDisplayed(false);
 	}
 }

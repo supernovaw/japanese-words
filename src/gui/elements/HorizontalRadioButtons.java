@@ -10,7 +10,6 @@ import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 
 public class HorizontalRadioButtons extends Element {
-	private static final int TRANSITION_PERIOD = 300; // time to switch buttons
 	private static final int OUTLINE_WIDTH = 1; // outline stroke width
 	private static final int OUTLINE_WIDTH_HOVERED = 3;
 	private static final int RND_CORNERS = 15;
@@ -21,18 +20,15 @@ public class HorizontalRadioButtons extends Element {
 
 	private int selected;
 
-	/* Coordinates of last selected button, used in transition animation.
+	/* Object parameters are 2 doubles for start and end X's used in
+	 * transition animation.
 	 * Just saving button index would have the same effect except that when
 	 * a new button is selected without last animation finishing, those
 	 * numbers take position of where the rectangle was while selecting
 	 * a new button and are used to animate motion from that point (with no
 	 * jumping from one place to another).
 	 */
-	private double selectionOldStart, selectionOldEnd;
-	private long transitionStartTime;
-	// used to skip calculation of phase and straightaway paint pre-rendered button
-	private boolean animationFinished = true;
-	private AnimatingElement animatingElement; // used to animate transition
+	private OneWayAnimating transitionAnimation;
 	private HoverCalc hoverCalc; // used to animate hovering
 
 	private int offsetX;
@@ -51,7 +47,7 @@ public class HorizontalRadioButtons extends Element {
 		this.align = align;
 		renderPaintingComponents();
 
-		animatingElement = new AnimatingElement(this);
+		transitionAnimation = new OneWayAnimating(300, this);
 		hoverCalc = new HoverCalc(120, this, OUTLINE_WIDTH_HOVERED);
 	}
 
@@ -59,23 +55,13 @@ public class HorizontalRadioButtons extends Element {
 	protected void paint(Graphics2D g) {
 		Area buttonArea;
 
-		if (animationFinished) { // case for no transition animation, just take pre-rendered area
+		double buttonTransitionPhase = transitionAnimation.getPhase();
+		if (buttonTransitionPhase == 1) { // case for no transition animation, just take pre-rendered area
 			buttonArea = selectionAreas[selected];
-		} else {
-			long passed = System.currentTimeMillis() - transitionStartTime;
-
-			if (passed < TRANSITION_PERIOD) { // paint transition animation
-				double phase = (double) passed / TRANSITION_PERIOD;
-				buttonArea = paint(selected, selectionOldStart, selectionOldEnd, phase);
-			} else { // if animation has finished
-				buttonArea = selectionAreas[selected];
-
-				// only stop repaint calls, when spare delay passed
-				if (passed > TRANSITION_PERIOD + HoverCalc.AFT_STABILIZED_SPARE_DELAY) {
-					animationFinished = true;
-					animatingElement.setActive(false);
-				}
-			}
+		} else { // paint transition animation
+			double oldStart = (double) transitionAnimation.getParameter(0);
+			double oldEnd = (double) transitionAnimation.getParameter(1);
+			buttonArea = paint(selected, oldStart, oldEnd, buttonTransitionPhase);
 		}
 
 		int translateX = x(), translateY = y(); // fix to make sure translation is done equally in both directions
@@ -215,19 +201,18 @@ public class HorizontalRadioButtons extends Element {
 		if (newIndex == selected)
 			return; // ignore if clicked the selected button
 
-		// apply selectionOldStart and selectionOldEnd depending on situation
-		if (animationFinished) { // if animation is already finished, just apply old start and end X's
+		double selectionOldStart, selectionOldEnd;
+
+		// finds where selection start and end X's are when clicking
+		if (transitionAnimation.getPhase() == 1) { // no animation, take static values
 			selectionOldStart = getSeparatorX(selected);
 			selectionOldEnd = getSeparatorX(selected + 1);
-		} else { // if changing selection while previous animation is running
-			long time = System.currentTimeMillis();
-			double phase = (double) (time - transitionStartTime) / TRANSITION_PERIOD;
-			if (phase > 1)
-				phase = 1;
+		} else { // if the previous animation is already running
+			double phase = transitionAnimation.getPhase();
 
 			// characteristics of previous animation
-			double startGoesFrom = selectionOldStart;
-			double endGoesFrom = selectionOldEnd;
+			double startGoesFrom = (double) transitionAnimation.getParameter(0);
+			double endGoesFrom = (double) transitionAnimation.getParameter(1);
 
 			double startGoesTo = getSeparatorX(selected);
 			double endGoesTo = getSeparatorX(selected + 1);
@@ -241,9 +226,7 @@ public class HorizontalRadioButtons extends Element {
 			selectionOldEnd = currentEndPos;
 		}
 		selected = newIndex;
-		transitionStartTime = System.currentTimeMillis();
-		animatingElement.setActive(true);
-		animationFinished = false;
+		transitionAnimation.animate(selectionOldStart, selectionOldEnd);
 	}
 
 	@Override
@@ -269,13 +252,12 @@ public class HorizontalRadioButtons extends Element {
 	@Override
 	protected void onDisplay() {
 		hoverCalc.setDisplayed(true);
-		animatingElement.setDisplayed(true);
+		transitionAnimation.setDisplayed(true);
 	}
 
 	@Override
 	protected void onShut() {
 		hoverCalc.shut();
-		animatingElement.setDisplayed(false);
-		animationFinished = true;
+		transitionAnimation.setDisplayed(false);
 	}
 }
