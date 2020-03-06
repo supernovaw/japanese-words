@@ -117,18 +117,34 @@ public final class HoverCalc {
 	}
 
 	public double getCubicInOut() {
-		return easeCubicInOut(getPhase());
+		double phase = getPhase();
+		if (phase == 0 || phase == 1)
+			return phase;
+		else
+			return easeCubicInOut(phase);
 	}
 
 	public double getCubicOut() {
-		return easeCubicOut(getPhase());
+		double phase = getPhase();
+		if (phase == 0 || phase == 1)
+			return phase;
+		else
+			return easeCubicOut(phase);
 	}
 
 	public double getCubicIn() {
-		return easeCubicIn(getPhase());
+		double phase = getPhase();
+		if (phase == 0 || phase == 1)
+			return phase;
+		else
+			return easeCubicIn(phase);
 	}
 
 	public double getSine() {
-		return easeSine(getPhase());
+		double phase = getPhase();
+		if (phase == 0 || phase == 1)
+			return phase;
+		else
+			return easeSine(phase);
 	}
 }
