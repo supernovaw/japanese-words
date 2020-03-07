@@ -162,8 +162,6 @@ public final class Window {
 			@Override
 			public void componentResized(ComponentEvent e) {
 				Dimension size = getSize();
-				if (size.width == 0 && size.height == 0)
-					return; // when window's created, it has [0, 0] size; ignore it
 
 				scene.onContainerSizeChange(size); // relocate elements if needed
 				windowElements.forEach(element -> element.onContainerSizeChange(size));
@@ -313,7 +311,10 @@ public final class Window {
 	}
 
 	public Dimension getSize() {
-		return frame.getContentPane().getSize();
+		Dimension result = frame.getContentPane().getSize();
+		if (result.width == 0 && result.height == 0)
+			return INITIAL_PANEL_SIZE; // avoid (0, 0) coordinates bug
+		return result;
 	}
 
 	public void changeScene(Scene s) {
