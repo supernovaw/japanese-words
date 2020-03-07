@@ -161,10 +161,14 @@ public final class Window {
 		frame.addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
-				scene.onContainerSizeChange(getSize()); // relocate elements if needed
-				windowElements.forEach(element -> element.onContainerSizeChange(getSize()));
+				Dimension size = getSize();
+				if (size.width == 0 && size.height == 0)
+					return; // when window's created, it has [0, 0] size; ignore it
+
+				scene.onContainerSizeChange(size); // relocate elements if needed
+				windowElements.forEach(element -> element.onContainerSizeChange(size));
 				if (oldScene != null)
-					oldScene.onContainerSizeChange(getSize());
+					oldScene.onContainerSizeChange(size);
 
 				Point mouse = MouseInfo.getPointerInfo().getLocation();
 				Point window = frame.getLocation();
@@ -175,7 +179,7 @@ public final class Window {
 				if (mouseHid)
 					showMouse();
 
-				// as position is changed, mouse might no longer be atop the window without elements noticing
+				// as position is changed, mouse might be no longer atop the window without elements noticing
 				MouseEvent mouseMove = new MouseEvent(content, 0, lastMouseMoveTime, 0,
 						lastMousePosition.x, lastMousePosition.y, 0, false, 0);
 				scene.mouseMoved(mouseMove);
