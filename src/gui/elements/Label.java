@@ -33,14 +33,14 @@ public class Label extends Element {
 		this(text, Theme.getUIFont(), container, bounds);
 	}
 
-	public void changeText(String text) {
+	public void changeText(String newText) {
 		if (textArea == null) { // if the value hasn't been set since last changeText run
 			textChangeAnimate.animate(text);
 		} else {
 			textChangeAnimate.animate(textArea);
 		}
 		textArea = null; // cause it to be updated on the next repaint
-		this.text = text;
+		text = newText;
 	}
 
 	@Override
