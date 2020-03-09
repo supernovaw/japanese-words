@@ -37,6 +37,20 @@ public final class OneWayAnimating {
 			animatingElement.setActive(true);
 	}
 
+	public void setParameter(int index, Object p) {
+		if (previousObject == null) {
+			previousObject = new Object[index + 1];
+			previousObject[index] = p;
+		} else if (previousObject.length <= index) { // if not enough size
+			Object[] newArray = new Object[index + 1];
+			System.arraycopy(previousObject, 0, newArray, 0, previousObject.length);
+			newArray[index] = p;
+			previousObject = newArray;
+		} else {
+			previousObject[index] = p;
+		}
+	}
+
 	public Object getParameter(int index) {
 		return previousObject[index];
 	}

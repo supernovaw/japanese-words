@@ -10,7 +10,7 @@ public class Label extends Element {
 	private int alignHorizontal;
 	private Area textArea;
 	private Font font;
-	// textChangeAnimate has object parameter Area (old textArea)
+	// textChangeAnimate has object parameter Area (old textArea) or String if no Area available
 	private OneWayAnimating textChangeAnimate;
 
 	public Label(String text, int alignHorizontal, Font f, Scene container, Bounds bounds) {
@@ -34,7 +34,11 @@ public class Label extends Element {
 	}
 
 	public void changeText(String text) {
-		textChangeAnimate.animate(textArea);
+		if (textArea == null) { // if the value hasn't been set since last changeText run
+			textChangeAnimate.animate(text);
+		} else {
+			textChangeAnimate.animate(textArea);
+		}
 		textArea = null; // cause it to be updated on the next repaint
 		this.text = text;
 	}
@@ -60,7 +64,16 @@ public class Label extends Element {
 			g.setColor(Theme.getFG(fadePhase));
 			g.fill(textArea);
 			g.setColor(Theme.getFG(1d - fadePhase));
-			g.fill((Area) textChangeAnimate.getParameter(0));
+
+			Object textParameter = textChangeAnimate.getParameter(0);
+			if (textParameter instanceof String) {
+				String s = (String) textParameter;
+				double textX = alignStringX(g, s, 0, w(), alignHorizontal);
+				double textY = centerStringY(g, h() / 2);
+				textParameter = getTextArea(text, textX, textY, g);
+				textChangeAnimate.setParameter(0, textParameter);
+			}
+			g.fill((Area) textParameter);
 		}
 
 		g.translate(-tx, -ty);
