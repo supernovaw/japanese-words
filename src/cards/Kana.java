@@ -188,6 +188,30 @@ public final class Kana {
 		return c;
 	}
 
+	// checks if a string only contains kana reading characters (including chōonpu)
+	public static boolean isValidKanaReading(String reading) {
+		for (int i = 0; i < reading.length(); i++) {
+			char c = reading.charAt(i);
+			if (!isKanaChar(c) && c != CHOONPU)
+				return false;
+		}
+		return true;
+	}
+
+	private static boolean isKanaChar(char c) {
+		// 'n' and sokuon are not listen in gojūon and need to be checked separately
+		if (c == HIRAGANA_N || c == KATAKANA_N ||
+				c == HIRAGANA_SOKUON || c == KATAKANA_SOKUON)
+			return true;
+
+		for (int col = 0; col < GOJUON_COLUMNS; col++)
+			for (int row = 0; row < GOJUON_ROWS; row++)
+				if (HIRAGANA_GOJUON[col][row].isThisLetter(c) ||
+						KATAKANA_GOJUON[col][row].isThisLetter(c))
+					return true;
+		return false;
+	}
+
 	// represents a letter either from hiragana or katakana, featuring its versions
 	private static class KanaChar {
 		// normal appearance of this 五十音 (gojūon) letter
@@ -209,6 +233,14 @@ public final class Kana {
 			this.dakuten = (char) dakuten;
 			this.handakuten = (char) handakuten;
 			this.yoon = (char) yoon;
+		}
+
+		// checks if a char is any of this letter variants
+		private boolean isThisLetter(char c) {
+			return c == normal ||
+					c == dakuten ||
+					c == handakuten ||
+					c == yoon;
 		}
 	}
 }
