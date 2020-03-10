@@ -1,10 +1,10 @@
 package gui;
 
-import javax.imageio.ImageIO;
+import main.Assets;
+
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.io.File;
 
 public final class Theme {
 	private static Color background = Color.black, foreground = Color.white;
@@ -18,9 +18,9 @@ public final class Theme {
 
 	static {
 		try {
-			bgImage = ImageIO.read(new File("assets/bg.jpg"));
-			fontEnglish = Font.createFont(Font.TRUETYPE_FONT, new File("assets/fonts/SFProText-Light.ttf"));
-			fontJapanese = Font.createFont(Font.TRUETYPE_FONT, new File("assets/fonts/YuGothL.ttc"));
+			bgImage = Assets.loadImage("bg.jpg");
+			fontEnglish = Assets.loadFont("SFProText-Light.ttf");
+			fontJapanese = Assets.loadFont("YuGothL.ttc");
 			UIFont = fontEnglish.deriveFont(UIFontsize);
 		} catch (Exception e) {
 			e.printStackTrace();
