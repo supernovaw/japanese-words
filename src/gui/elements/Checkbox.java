@@ -127,6 +127,10 @@ public class Checkbox extends Element {
 				checkboxSize, checkboxSize, RND_CORNERS, RND_CORNERS);
 	}
 
+	public boolean isChecked() {
+		return checked;
+	}
+
 	private void click() {
 		checked = !checked;
 	}
