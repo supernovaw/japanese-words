@@ -12,6 +12,7 @@ public final class Theme {
 	private static BufferedImage bgImage;
 
 	private static Font fontEnglish;
+	private static Font fontJapanese;
 	private static float UIFontsize = 20f;
 	private static Font UIFont;
 
@@ -19,6 +20,7 @@ public final class Theme {
 		try {
 			bgImage = ImageIO.read(new File("assets/bg.jpg"));
 			fontEnglish = Font.createFont(Font.TRUETYPE_FONT, new File("assets/fonts/SFProText-Light.ttf"));
+			fontJapanese = Font.createFont(Font.TRUETYPE_FONT, new File("assets/fonts/YuGothL.ttc"));
 			UIFont = fontEnglish.deriveFont(UIFontsize);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -53,6 +55,10 @@ public final class Theme {
 
 	public static Font getUIFont() {
 		return UIFont;
+	}
+
+	public static Font getFontJapanese() {
+		return fontJapanese;
 	}
 
 	public static void paintBackground(Graphics2D g, Dimension screen) {
