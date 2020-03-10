@@ -1,0 +1,100 @@
+州	しゅう	state
+全て	すべて	everything
+明治	めいじ	Meiji era
+点	てん	mark, counter for points
+力	ちから	force, power
+王	おう	king
+試合	しあい	match, game
+優勝	ゆうしょう	championship
+都市	とし	city
+アルバム	あるばむ	album
+問題	もんだい	problem, question
+シーズン	しーずん	season
+開催	かいさい	holding, hosting
+大阪	おおさか	Osaka
+位置	いち	position, location
+監督	かんとく	supervision, direction
+上	うえ	top
+設置	せっち	establishment
+郡	ぐん	county, district
+戦争	せんそう	war, battle
+物	もの	thing
+艦	かん	warship
+地方	ちほう	region
+城	しろ	castle
+計画	けいかく	plan
+変更	へんこう	change, modification
+本	ほん	book
+中央	ちゅうおう	center, middle
+事業	じぎょう	business, project
+委員	いいん	committee member
+バス	ばす	bus
+市	し	city
+以下	いか	below, not exceeding
+社会	しゃかい	society
+教育	きょういく	education
+事件	じけん	incident, event
+卒業	そつぎょう	graduation
+結果	けっか	result
+選挙	せんきょ	election
+機関	きかん	engine
+政府	せいふ	government
+中国	ちゅうごく	China
+金	きん	gold
+建設	けんせつ	construction
+影響	えいきょう	influence
+外	がい	outside of
+デビュー	でびゅー	debut
+情報	じょうほう	information
+航空	こうくう	aviation
+村	むら	village
+政治	せいじ	politics
+販売	はんばい	sale
+攻撃	こうげき	attack
+人口	じんこう	population
+区	く	ward
+馬	うま	horse
+経済	けいざい	economics
+地区	ちく	district, sector
+水	みず	water
+路線	ろせん	route
+アメリカ合衆国	あめりかがっしゅうこく	USA
+米	べい	rice
+グループ	ぐるーぷ	group
+女性	じょせい	woman
+手	て	hand, arm
+システム	しすてむ	system
+歴史	れきし	history
+意味	いみ	meaning
+県	けん	prefecture
+技術	ぎじゅつ	technology
+海軍	かいぐん	navy
+発生	はっせい	outbreak
+製造	せいぞう	manufacture, production
+自身	じしん	oneself
+車両	しゃりょう	vehicle, rolling stock
+光	ひかり	light
+話	はなし	talk, story
+野球	やきゅう	baseball
+調査	ちょうさ	investigation, examination
+船	ふね	ship, boat
+シングル	しんぐる	single
+勝	しょう	win, victory
+列車	れっしゃ	train
+父	ちち	father
+活躍	かつやく	activity
+省	しょう	ministry
+終了	しゅうりょう	end
+文	ぶん	sentence
+人物	じんぶつ	personage, character
+ロシア	ろしあ	Russia
+就任	しゅうにん	inauguration, assumption
+最後	さいご	last, final
+下	した	bottom
+状態	じょうたい	state, condition
+橋	はし	bridge
+決定	けってい	decision
+組織	そしき	organization
+イタリア	いたりあ	Italy
+朝	あさ	morning
+帝国	ていこく	empire

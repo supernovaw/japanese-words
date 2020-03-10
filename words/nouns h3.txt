@@ -1,0 +1,100 @@
+株式	かぶしき	stock, share
+海	うみ	sea
+神	かみ	god
+道路	どうろ	road, highway
+京都	きょうと	Kyoto
+部分	ぶぶん	portion
+漫画	まんが	cartoon
+最大	さいだい	maximum
+石	いし	stone
+独立	どくりつ	independence
+場所	ばしょ	place, location
+県道	けんどう	prefectural road
+クラブ	くらぶ	club
+サッカー	さっかー	soccer
+高校	こうこう	high school
+運動	うんどう	exercise
+量	りょう	quantity
+センター	せんたー	center
+企業	きぎょう	enterprise
+店	みせ	store
+戦闘	せんとう	battle
+目的	もくてき	goal, aim
+対応	たいおう	correspondence
+勝利	しょうり	victory
+管理	かんり	management
+木	き	tree
+基本	きほん	basics
+教授	きょうじゅ	professor
+ドラマ	どらま	drama
+構造	こうぞう	structure
+アニメ	あにめ	animation
+設計	せっけい	design
+メンバー	めんばー	member
+交通	こうつう	traffic
+協会	きょうかい	association
+女子	じょし	girl
+設定	せってい	settings
+発見	はっけん	discovery
+契約	けいやく	contract
+英語	えいご	English
+生活	せいかつ	living
+連合	れんごう	union
+自動車	じどうしゃ	automobile	
+色	いろ	color
+色	しょく	counter for colours
+自分	じぶん	myself
+ラジオ	らじお	radio
+歌	うた	song
+廃止	はいし	abolition
+名前	なまえ	given name
+成功	せいこう	success
+予定	よてい	plans
+キャラクター	きゃらくたー	character
+巻	かん	counter for volumes (of book)
+最高	さいこう	highest, best
+バンド	ばんど	band (music)
+専門	せんもん	specialty, subject
+出版	しゅっぱん	publication
+内容	ないよう	contents
+小学校	しょうがっこう	primary school
+数	かず	number, amount
+例	れい	example
+リリース	りりーす	release
+大戦	たいせん	great war
+科学	かがく	science
+運行	うんこう	motion
+北海道	ほっかいどう	Hokkaido
+ヨーロッパ	よーろっぱ	Europe
+指定	してい	determination
+江戸	えど	Edo
+教会	きょうかい	church
+共和	きょうわ	republican
+国家	こっか	nation
+連続	れんぞく	continuity
+導入	どうにゅう	introduction
+記念	きねん	commemoration
+特徴	とくちょう	characteristics
+宇宙	うちゅう	universe
+死去	しきょ	death
+小説	しょうせつ	novel
+大統領	だいとうりょう	president
+公園	こうえん	park
+タイトル	たいとる	title
+カード	かーど	card
+警察	けいさつ	police
+形式	けいしき	format
+結婚	けっこん	marriage
+参照	さんしょう	reference
+夏	なつ	summer
+ローマ	ろーま	Rome
+国民	こくみん	national
+中学校	ちゅうがっこう	junior high school
+評価	ひょうか	evaluation
+オリンピック	おりんぴっく	olympics
+完全	かんぜん	completeness
+連邦	れんぽう	commonwealth
+指導	しどう	guidance
+会議	かいぎ	meeting, conference
+谷	たに	valley
+決勝	けっしょう	decision of contest

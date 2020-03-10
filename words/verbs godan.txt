@@ -1,0 +1,100 @@
+する	する	do
+成る	なる	become
+有る	ある	exist, have
+よる	よる	drop by, stop at
+言う	いう	say
+行う	おこなう	perform
+持つ	もつ	have
+呼ぶ	よぶ	call
+会う	あう	meet
+行く	いく	go
+使う	つかう	use
+取る	とる	take
+知る	しる	know
+入る	はいる	enter
+含む	ふくむ	contain, include
+込む	こむ	go into
+出す	だす	get out
+作る	つくる	make
+戦う	たたかう	wage war
+置く	おく	put
+続く	つづく	continue
+異なる	ことなる	differ, vary
+伴う	ともなう	accompany
+当たる	あたる	hit
+渡る	わたる	cross over
+書く	かく	write
+果たす	はたす	accomplish
+描く	えがく	draw
+始まる	はじまる	begin
+示す	しめす	show, indicate
+付ける	つける	attach
+結ぶ	むすぶ	tie
+残る	のこる	remain
+思う	おもう	think
+終わる	おわる	end
+残す	のこす	leave
+係わる	かかわる	be affected, involved
+選ぶ	えらぶ	choose, select
+進む	すすむ	advance
+向かう	むかう	head, face
+扱う	あつかう	treat
+勝つ	かつ	win
+除く	のぞく	except, exclude
+送る	おくる	send
+基づく	もとづく	be based on
+違う	ちがう	be wrong, differ
+戻る	もどる	go back, return
+開く	ひらく	open
+起こる	おこる	occur, happen
+学ぶ	まなぶ	learn
+組む	くむ	cross, put together
+乗る	のる	get on, ride
+指す	さす	point
+語る	かたる	talk about
+失う	うしなう	lose
+継ぐ	つぐ	succeed
+表す	あらわす	signify, represent
+立つ	たつ	stand
+住む	すむ	live
+目指す	めざす	aim, head for
+起こす	おこす	wake
+変わる	かわる	change
+読む	よむ	read
+止まる	とまる	stop
+動く	うごく	move
+記す	しるす	write down
+図る	はかる	plan, plot
+走る	はしる	run
+代わる	かわる	replace
+働く	はたらく	work, labour
+歌う	うたう	sing
+従う	したがう	obey, follow
+上がる	あがる	rise
+並ぶ	ならぶ	line up
+切る	きる	cut
+売る	うる	sell
+追う	おう	chase
+限る	かぎる	limit
+引く	ひく	subtract, draw, attract
+亡くなる	なくなる	die
+属する	ぞくする	belong
+争う	あらそう	contend
+来る	くる	come
+死ぬ	しぬ	die, perish
+破る	やぶる	tear, destroy
+居る	いる	be, exist
+打つ	うつ	hit
+守る	まもる	defend
+次ぐ	つぐ	come after
+なる	なる	become
+合う	あう	fit, match
+通う	かよう	go to and from, circulate
+回る	まわる	revolve
+聞く	きく	hear, listen
+分かる	わかる	understand
+待つ	まつ	wait
+巡る	めげる	go around
+加わる	くわわる	join, participate
+広がる	ひろがる	spread
+繰り返す	くりかえす	repeat

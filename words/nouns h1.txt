@@ -1,0 +1,100 @@
+年	とし	year
+年	ねん	counter for years
+月	つき	moon, month
+日	にち	counter for days
+日	ひ	day
+日本	にほん	Japan
+人	ひと	person
+人	にん	counter for people
+駅	えき	railway station
+国	くに	country
+大学	だいがく	university
+現在	げんざい	present
+後	あと	after
+線	せん	line
+放送	ほうそう	broadcasting
+号	ごう	number
+軍	ぐん	army
+部	ぶ	part
+所	ところ	place
+名	な	name
+回	かい	counter for occurrences
+世界	せかい	world
+時	とき	time
+時	じ	counter for hours, o'clock
+戦	せん	war, battle
+時代	じだい	era
+東京	とうきょう	Tokyo
+会	かい	meeting
+機	き	machine, aircraft
+選手	せんしゅ	player (sports)
+場合	ばあい	case, situation
+昭和	しょうわ	Showa era
+作品	さくひん	work
+地	ち	earth
+中	ちゅう	during
+中	なか	inside
+使用	しよう	use
+学校	がっこう	school
+語	ご	language
+彼	かれ	he
+アメリカ	あめりか	America
+当時	とうじ	at that time
+番組	ばんぐみ	programme
+車	くるま	car
+社	しゃ	company
+川	かわ	river
+映画	えいが	movie
+テレビ	てれび	television
+系	けい	system
+研究	けんきゅう	study, research
+町	まち	town
+東	ひがし	east
+存在	そんざい	existence
+活動	かつどう	activity
+発売	はつばい	sale
+出身	しゅっしん	motherland
+会社	かいしゃ	company
+権	けん	right (to do something)
+開発	かいはつ	development
+分	ぶん	minute
+西	にし	west
+鉄道	てつどう	railway
+局	きょく	bureau
+間	かん	period of time
+山	やま	mountain
+式	しき	formula
+島	しま	island
+可能	かのう	possible
+ドイツ	どいつ	Germany
+曲	きょく	song
+地域	ちいき	territory
+事	こと	thing
+版	はん	edition
+チーム	ちーむ	team
+時間	じかん	time, counter for hours
+大会	たいかい	mass meeting, tournament
+南	みなみ	south
+シリーズ	しりーず	series
+賞	しょう	award
+北	きた	north
+開始	かいし	start
+フランス	ふらんす	France
+平成	へいせい	Heisei era
+子	こ	child
+ゲーム	げーむ	game
+道	みち	road
+角	つの	corner
+体	からだ	body
+世紀	せいき	century
+音楽	おんがく	music
+参加	さんか	participation
+発表	はっぴょう	announcement
+記録	きろく	record
+利用	りよう	utilization
+際	さい	on the occasion of
+出場	しゅつじょう	(stage) appearance, performance
+リーグ	りーぐ	league
+関係	かんけい	relationship
+イギリス	いぎりす	United Kingdom
+度	ど	degree
