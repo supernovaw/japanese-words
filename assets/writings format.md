@@ -1,4 +1,4 @@
-##assets/writings
+## assets/writings
 
 Contains coded information of 6744 kanji writings taken from KanjiVG
 (https://kanjivg.tagaini.net/). The only default versions of kanji writings were taken
