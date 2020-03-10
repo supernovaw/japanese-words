@@ -43,7 +43,7 @@ public final class Kana {
 			getGojuonColumn("たちつてとだぢづでど　　　　　　　　　　"),
 			getGojuonColumn("なにぬねの　　　　　　　　　　　　　　　"),
 			getGojuonColumn("はひふへほばびぶべぼぱぴぷぺぽ　　　　　"),
-			getGojuonColumn("まみむめも                         "),
+			getGojuonColumn("まみむめも　　　　　　　　　　　　　　　"),
 			getGojuonColumn("や　ゆ　よ　　　　　　　　　　ゃ　ゅ　ょ"),
 			getGojuonColumn("らりるれろ　　　　　　　　　　　　　　　"),
 			getGojuonColumn("わ　　　を　　　　　　　　　　　　　　　")
@@ -55,7 +55,7 @@ public final class Kana {
 			getGojuonColumn("タチツテトダヂヅデド　　　　　　　　　　"),
 			getGojuonColumn("ナニヌネノ　　　　　　　　　　　　　　　"),
 			getGojuonColumn("ハヒフヘホバビブベボパピプペポ　　　　　"),
-			getGojuonColumn("マミムメモ                         "),
+			getGojuonColumn("マミムメモ　　　　　　　　　　　　　　　"),
 			getGojuonColumn("ヤ　ユ　ヨ　　　　　　　　　　ャ　ュ　ョ"),
 			getGojuonColumn("ラリルレロ　　　　　　　　　　　　　　　"),
 			getGojuonColumn("ワ　　　ヲ　　　　　　　　　　　　　　　")
