@@ -65,6 +65,7 @@ public final class Window {
 		frame.setSize(INITIAL_PANEL_SIZE);
 		frame.setMinimumSize(new Dimension(400, 400));
 		frame.setLocationRelativeTo(null);
+		frame.setFocusTraversalKeysEnabled(false); // allows to use Tab key
 
 		frame.setUndecorated(true);
 		frame.setBackground(new Color(0, 0, 0, 0));

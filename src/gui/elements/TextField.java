@@ -1,5 +1,6 @@
 package gui.elements;
 
+import cards.Kana;
 import gui.*;
 
 import javax.swing.*;
@@ -11,12 +12,18 @@ import java.awt.event.MouseEvent;
 
 public class TextField extends Element {
 	private static Color selectionFillColor = new Color(0x3c0078d7, true);
+	private static final int KANA_SWITCH_KEY = KeyEvent.VK_TAB;
+
+	private boolean isKanaInput;
+	private int kanaType = Kana.HIRAGANA; // takes a value of either HIRAGANA or KATAKANA, only used with isKanaInput
 
 	private int offsetXFixed; // X offset from bounds start. Letters like 'j' stick out to the left and need this gap
 	private int offsetX; // offset to paint text, may vary if text is larger than bounds
 	private String text;
 	private int caretPos, selectionFromPos;
 	private Font font;
+	private Font hintFont;
+	private float fontSize;
 	private int slideWhenFading; // distance text slides up when fading away
 	private int caretHeight; // caret and selection height
 	private boolean hold; // for selecting text by dragging
@@ -29,30 +36,27 @@ public class TextField extends Element {
 	// fadingText has object parameters String (text) and int (offsetX)
 	private OneWayAnimating fadingText;
 
-	public TextField(String text, String hintText, Runnable onEnter, Scene container, Bounds bounds) {
+	public TextField(String hintText, Runnable onEnter, Scene container, Bounds bounds) {
 		super(container, bounds);
 
-		this.text = text;
-		selectionFromPos = caretPos = text.length(); // don't use setCaret because it requires fontMetrics assigned
+		text = "";
 		this.onEnter = onEnter;
 
 		hintDisplayCalc = new HoverCalc(300, this);
 		hintDisplayCalc.setInitially(text.isEmpty());
 		this.hintText = hintText;
 
-		int fontsize = h() / 2;
-		font = Theme.getUIFont().deriveFont((float) fontsize);
-		caretHeight = (int) (fontsize * 1.2d);
-		offsetXFixed = offsetX = (h() - fontsize) / 2;
-		slideWhenFading = (int) (0.7d * fontsize);
+		fontSize = h() / 2f;
+		font = Theme.getUIFont().deriveFont(fontSize);
+		hintFont = Theme.getUIFont().deriveFont(fontSize);
+
+		caretHeight = (int) (fontSize * 1.2d);
+		offsetXFixed = offsetX = (int) (h() - fontSize) / 2;
+		slideWhenFading = (int) (0.7d * fontSize);
 
 		focusCalc = new HoverCalc(300, this);
 		fadingText = new OneWayAnimating(400, () -> repaint(new Rectangle(
 				x(), y() - slideWhenFading, w(), h() + slideWhenFading)));
-	}
-
-	public TextField(String text, String hintText, Scene container, Bounds bounds) {
-		this(text, hintText, null, container, bounds);
 	}
 
 	public void setOnEnter(Runnable r) {
@@ -81,19 +85,29 @@ public class TextField extends Element {
 		return oldText;
 	}
 
+	public void setKanaInput(boolean b) {
+		if (b)
+			font = Theme.getFontJapanese().deriveFont(fontSize);
+		else
+			font = Theme.getUIFont().deriveFont(fontSize);
+		isKanaInput = b;
+	}
+
 	private void onFocusChange() {
 		hintDisplayCalc.setHovered(text.isEmpty() && !focusCalc.isHovered());
 	}
 
 	@Override
 	protected void paint(Graphics2D g) {
-		g.setFont(font);
-
 		Shape clipBefore = g.getClip();
 		Composite compositeBefore = g.getComposite();
 		g.setClip(x(), y() - slideWhenFading, w(), h() + slideWhenFading); // don't let the text go outside bounds
+
 		paintHintText(g);
+
+		g.setFont(font);
 		paintFadingText(g);
+
 		g.setColor(Theme.getFG());
 		g.fill(getTextArea(text, x() + offsetX, centerStringY(g, y() + h() / 2), g)); // paint text
 
@@ -127,6 +141,7 @@ public class TextField extends Element {
 		if (phase == 0)
 			return;
 		g.setColor(Theme.getFG(phase * 0.45));
+		g.setFont(hintFont);
 		g.fill(getTextArea(hintText, x() + offsetXFixed, centerStringY(g, y() + h() / 2), g));
 	}
 
@@ -230,77 +245,114 @@ public class TextField extends Element {
 	protected void keyPressed(KeyEvent e) {
 		if (!focusCalc.isHovered())
 			return; // if no focus
+		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+			onEnter.run();
+			return;
+		}
 
-		boolean isChar = e.getKeyCode() != KeyEvent.CHAR_UNDEFINED &&
-				!e.isActionKey() && font.canDisplay(e.getKeyChar());
-
-		if (isChar) {
-			type(e); // case for letters, characters, punctuation, etc.
-		} else {
-			switch (e.getKeyCode()) {
-				case KeyEvent.VK_BACK_SPACE: // (Ctrl)+Backspace
-					keyBackspace(e);
-					break;
-				case KeyEvent.VK_DELETE: // (Ctrl)+(Shift)+Delete
-					keyDelete(e);
-					break;
-				case KeyEvent.VK_LEFT: // (Ctrl)+(Shift)+Left
-					keyLeft(e);
-					break;
-				case KeyEvent.VK_RIGHT: // (Ctrl)+(Shift)+Right
-					keyRight(e);
-					break;
-				case KeyEvent.VK_V: // Ctrl+V
-					if (e.isControlDown())
-						paste();
-					break;
-				case KeyEvent.VK_INSERT: // (Ctrl)+(Shift)+Insert
-					if (e.getModifiersEx() == KeyEvent.SHIFT_DOWN_MASK)
-						paste();
-					if (e.getModifiersEx() == KeyEvent.CTRL_DOWN_MASK)
-						copy();
-					break;
-				case KeyEvent.VK_C: // Ctrl+C
-					if (e.isControlDown())
-						copy();
-					break;
-				case KeyEvent.VK_UP: // (Shift)+Up
-				case KeyEvent.VK_HOME: // (Shift)+Home
-					caretToBeginning(e);
-					break;
-				case KeyEvent.VK_DOWN: // (Shift)+Down
-				case KeyEvent.VK_END: // (Shift)+End
-					caretToEnd(e);
-					break;
-				case KeyEvent.VK_A: // Ctrl+A
-					if (e.isControlDown())
-						selectAll();
-					break;
-				case KeyEvent.VK_X: // Ctrl+X
-					if (e.isControlDown())
-						cut();
-					break;
+		if (isKanaInput) { // use Japanese layout (translated with Kana class)
+			handleKanaInput(e);
+		} else { // default input type
+			boolean isChar = e.getKeyCode() != KeyEvent.CHAR_UNDEFINED &&
+					!e.isActionKey() && font.canDisplay(e.getKeyChar());
+			if (isChar) {
+				type(e.getKeyChar()); // case for letters, characters, punctuation, etc.
+			} else {
+				executeEditingShortcuts(e);
 			}
 		}
 		repaint();
 	}
 
-	private void type(KeyEvent e) {
-		if (e.getKeyChar() == '\n') { // if Enter is pressed
-			enter();
+	private void handleKanaInput(KeyEvent e) {
+		int code = e.getKeyCode();
+
+		if (code == KANA_SWITCH_KEY) {
+			if (kanaType == Kana.HIRAGANA)
+				kanaType = Kana.KATAKANA;
+			else
+				kanaType = Kana.HIRAGANA;
 			return;
 		}
+
+		if (code == Kana.DAKUTEN_KEYCODE || code == Kana.HANDAKUTEN_KEYCODE) {
+			/* Dakuten/handakuten can only be added if:
+			 * shift isn't down;
+			 * there is no selection;
+			 * there is a character before the caret.
+			 */
+			if (!e.isShiftDown() && selectionFromPos == caretPos && caretPos != 0) {
+				char c = text.charAt(caretPos - 1);
+				c = code == Kana.DAKUTEN_KEYCODE ? Kana.addDakuten(c) : Kana.addHandakuten(c);
+				text = text.substring(0, caretPos - 1) + c + text.substring(caretPos);
+			}
+			return;
+		}
+
+		char kana = Kana.getTypedChar(code, e.isShiftDown(), kanaType);
+		// if the key is not kana or Ctrl is down, only execute as a shortcut
+		if (kana == 0 || e.isControlDown()) {
+			executeEditingShortcuts(e);
+		} else { // kana letter
+			type(kana);
+		}
+	}
+
+	// actions like Left Arrow, Ctrl + C, Shift + Ins
+	private void executeEditingShortcuts(KeyEvent e) {
+		switch (e.getKeyCode()) {
+			case KeyEvent.VK_BACK_SPACE: // (Ctrl)+Backspace
+				keyBackspace(e);
+				break;
+			case KeyEvent.VK_DELETE: // (Ctrl)+(Shift)+Delete
+				keyDelete(e);
+				break;
+			case KeyEvent.VK_LEFT: // (Ctrl)+(Shift)+Left
+				keyLeft(e);
+				break;
+			case KeyEvent.VK_RIGHT: // (Ctrl)+(Shift)+Right
+				keyRight(e);
+				break;
+			case KeyEvent.VK_V: // Ctrl+V
+				if (e.isControlDown())
+					paste();
+				break;
+			case KeyEvent.VK_INSERT: // (Ctrl)+(Shift)+Insert
+				if (e.getModifiersEx() == KeyEvent.SHIFT_DOWN_MASK)
+					paste();
+				if (e.getModifiersEx() == KeyEvent.CTRL_DOWN_MASK)
+					copy();
+				break;
+			case KeyEvent.VK_C: // Ctrl+C
+				if (e.isControlDown())
+					copy();
+				break;
+			case KeyEvent.VK_UP: // (Shift)+Up
+			case KeyEvent.VK_HOME: // (Shift)+Home
+				caretToBeginning(e);
+				break;
+			case KeyEvent.VK_DOWN: // (Shift)+Down
+			case KeyEvent.VK_END: // (Shift)+End
+				caretToEnd(e);
+				break;
+			case KeyEvent.VK_A: // Ctrl+A
+				if (e.isControlDown())
+					selectAll();
+				break;
+			case KeyEvent.VK_X: // Ctrl+X
+				if (e.isControlDown())
+					cut();
+				break;
+		}
+	}
+
+	private void type(char c) {
 		int min = Math.min(selectionFromPos, caretPos);
 		int max = Math.max(selectionFromPos, caretPos);
 
 		// replace selected text (or an empty area) with typed character
-		text = text.substring(0, min) + e.getKeyChar() + text.substring(max);
+		text = text.substring(0, min) + c + text.substring(max);
 		setCaret(min + 1, true);
-	}
-
-	private void enter() {
-		if (onEnter != null)
-			onEnter.run();
 	}
 
 	private void keyBackspace(KeyEvent e) {
