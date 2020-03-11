@@ -1,17 +1,22 @@
 package cards;
 
+import recognition.Writings;
+
 public class Card {
 	private String word;
 	private String reading;
 	private String meaning;
 
 	private Card(String word, String reading, String meaning) {
+		if (!Writings.isSupported(word))
+			throw new IllegalArgumentException(word + " contains 1 or more characters with unsupported writing");
 		if (!Kana.isValidKanaReading(reading))
 			throw new IllegalArgumentException(reading + " contains 1 or more non-kana characters");
 
 		this.word = word;
 		this.reading = reading;
 		this.meaning = meaning;
+		Writings.register(word);
 	}
 
 	public String getWord() {

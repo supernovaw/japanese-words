@@ -1,6 +1,7 @@
 package cards;
 
 import main.Assets;
+import recognition.Writings;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -19,6 +20,7 @@ public class Cards {
 	private static List<Card> currentList;
 
 	public static void init() {
+		Writings.init();
 		loadWordFiles();
 	}
 
@@ -74,5 +76,9 @@ public class Cards {
 	public static void setCurrentList(List<String> fileNames) {
 		currentList.clear();
 		fileNames.forEach(name -> currentList.addAll(wordsFiles.get(name)));
+	}
+
+	public static int getCurrentSize() {
+		return currentList.size();
 	}
 }
