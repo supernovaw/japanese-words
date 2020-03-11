@@ -1,7 +1,6 @@
 package gui;
 
-import gui.scenes.SceneExample;
-import gui.scenes.SceneMain;
+import gui.scenes.*;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -14,7 +13,10 @@ import java.util.function.Consumer;
 public abstract class Scene {
 	// List of Scenes used in the app
 	public static SceneMain sceneMain;
-	public static SceneExample sceneExample;
+	public static SceneModeWordsSelection sceneModeWordsSelection;
+
+	public static SceneLearningWordWriting sceneLearningWordWriting;
+	public static SceneLearningWordMeaning sceneLearningWordMeaning;
 
 	private static boolean displayElementsBounds = false; // for development only
 	private final Window holder;
