@@ -173,6 +173,14 @@ public final class Curves {
 		return calculateBezierList(bezierList, t);
 	}
 
+	public static Path2D getPath(List<Point2D> path) {
+		Path2D result = new Path2D.Double();
+		result.moveTo(path.get(0).getX(), path.get(0).getY());
+		for (int i = 1; i < path.size(); i++)
+			result.lineTo(path.get(i).getX(), path.get(i).getY());
+		return result;
+	}
+
 	// finds a point on Bezier curve with t argument going from 1.0 to 1.0
 	public static Point2D calculateBezierList(Point2D[] list, double t) {
 		while (list.length != 1)
