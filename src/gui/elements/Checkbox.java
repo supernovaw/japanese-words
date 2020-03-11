@@ -131,6 +131,11 @@ public class Checkbox extends Element {
 		return checked;
 	}
 
+	public void setChecked(boolean checked) {
+		activationCalc.setInitially(checked);
+		this.checked = checked;
+	}
+
 	private void click() {
 		checked = !checked;
 	}

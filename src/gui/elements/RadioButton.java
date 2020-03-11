@@ -19,14 +19,16 @@ public class RadioButton extends Element {
 	private RadioButtonGroup group;
 	private HoverCalc slideCalc, activationCalc;
 
-	public RadioButton(String text, RadioButtonGroup group, Scene container, Bounds bounds) {
+	public RadioButton(String text, boolean enabled, RadioButtonGroup group, Scene container, Bounds bounds) {
 		super(container, bounds);
 		this.text = text;
 		this.group = group;
+		this.enabled = enabled;
 		group.add(this);
 		radioButtonY = (h() - radioButtonSize) / 2;
 		slideCalc = new HoverCalc(100, this);
 		activationCalc = new HoverCalc(200, this);
+		activationCalc.setInitially(enabled);
 	}
 
 	@Override

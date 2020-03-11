@@ -200,6 +200,10 @@ public class HorizontalRadioButtons extends Element {
 		return selected;
 	}
 
+	public void setSelectedButton(int s) {
+		selected = s;
+	}
+
 	private void proceedClick(Point p) {
 		int newIndex = getButtonIndex(p.x - x());
 		if (newIndex == selected)

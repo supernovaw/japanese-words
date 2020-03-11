@@ -8,7 +8,7 @@ import gui.elements.*;
 public class SceneExample extends Scene {
 	public SceneExample(Window holder) {
 		super(holder);
-		TextField tf = new TextField("", "Type and edit text here", this, new Bounds(50, 70, 500, 40));
+		TextField tf = new TextField("Type and edit text here", null, this, new Bounds(50, 70, 500, 40));
 		Label l = new Label("Read me", -1, this, new Bounds(50, 330, 200, 30));
 		tf.setOnEnter(() -> l.changeText(tf.flushText()));
 		addElement(tf);
@@ -20,9 +20,9 @@ public class SceneExample extends Scene {
 		addElement(l);
 
 		RadioButtonGroup group = new RadioButtonGroup();
-		addElement(new RadioButton("First option", group, this, new Bounds(50, 410, 200, 30)));
-		addElement(new RadioButton("Second option", group, this, new Bounds(50, 450, 200, 30)));
-		addElement(new RadioButton("Third option", group, this, new Bounds(50, 490, 200, 30)));
+		addElement(new RadioButton("First option", true, group, this, new Bounds(50, 410, 200, 30)));
+		addElement(new RadioButton("Second option", false, group, this, new Bounds(50, 450, 200, 30)));
+		addElement(new RadioButton("Third option", false, group, this, new Bounds(50, 490, 200, 30)));
 
 		addElement(new Button("Return", () -> changeScene(sceneMain), this, new Bounds(50, 570, 125, 30)));
 	}
