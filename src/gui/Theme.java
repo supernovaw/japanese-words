@@ -2,9 +2,11 @@ package gui;
 
 import main.Assets;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.io.FileInputStream;
 
 public final class Theme {
 	private static Color background = Color.black, foreground = Color.white;
@@ -17,14 +19,10 @@ public final class Theme {
 	private static Font UIFont;
 
 	static {
-		try {
-			bgImage = Assets.loadImage("bg.jpg");
-			fontEnglish = Assets.loadFont("SFProText-Light.ttf");
-			fontJapanese = Assets.loadFont("YuGothL.ttc");
-			UIFont = fontEnglish.deriveFont(UIFontsize);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		bgImage = Assets.loadImage("bg.jpg");
+		fontEnglish = Assets.loadFont("SFProText-Light.ttf");
+		fontJapanese = Assets.loadFont("YuGothL.ttc");
+		UIFont = fontEnglish.deriveFont(UIFontsize);
 	}
 
 	public static Color getFG() {
