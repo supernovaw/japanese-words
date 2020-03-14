@@ -47,7 +47,7 @@ public class TextField extends Element {
 		this.hintText = hintText;
 
 		fontSize = h() / 2f;
-		font = Theme.getUIFont().deriveFont(fontSize);
+		font = Theme.getFontEnglish().deriveFont(fontSize);
 		hintFont = Theme.getUIFont().deriveFont(fontSize);
 
 		caretHeight = (int) (fontSize * 1.2d);
@@ -85,7 +85,7 @@ public class TextField extends Element {
 		if (b)
 			font = Theme.getFontJapanese().deriveFont(fontSize);
 		else
-			font = Theme.getUIFont().deriveFont(fontSize);
+			font = Theme.getFontEnglish().deriveFont(fontSize);
 		isKanaInput = b;
 	}
 
