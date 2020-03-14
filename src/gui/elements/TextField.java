@@ -59,10 +59,6 @@ public class TextField extends Element {
 				x(), y() - slideWhenFading, w(), h() + slideWhenFading)));
 	}
 
-	public void setOnEnter(Runnable r) {
-		onEnter = r;
-	}
-
 	public String getText() {
 		return text;
 	}
@@ -93,8 +89,19 @@ public class TextField extends Element {
 		isKanaInput = b;
 	}
 
-	private void onFocusChange() {
-		hintDisplayCalc.setHovered(text.isEmpty() && !focusCalc.isHovered());
+	public void triggerFocus() {
+		focusCalc.setHovered(true);
+		updateHintState();
+	}
+
+	/* Hint display condition may depend on focus and the text, so
+	 * whenever those are changed they should call updateHintState
+	 * to make sure it's in the correct state. Presently there is
+	 * only text.isEmpty() check in the condition, but that might
+	 * be changed in the future.
+	 */
+	private void updateHintState() {
+		hintDisplayCalc.setHovered(text.isEmpty());
 	}
 
 	@Override
@@ -169,7 +176,7 @@ public class TextField extends Element {
 
 		boolean contains = contains(e.getPoint());
 		focusCalc.setHovered(contains);
-		onFocusChange();
+		updateHintState();
 		if (!contains)
 			return;
 
@@ -261,6 +268,7 @@ public class TextField extends Element {
 				executeEditingShortcuts(e);
 			}
 		}
+		updateHintState();
 		repaint();
 	}
 
@@ -515,8 +523,9 @@ public class TextField extends Element {
 
 	@Override
 	protected void onShut() {
+		hintDisplayCalc.setDisplayed(false);
 		focusCalc.shut();
-		onFocusChange();
+		updateHintState();
 		fadingText.setDisplayed(false);
 	}
 }
