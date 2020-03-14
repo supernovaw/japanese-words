@@ -1,16 +1,19 @@
 package gui.elements;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RadioButtonGroup {
-	private ArrayList<RadioButton> buttons;
-	private int selected = -1;
+	private List<RadioButton> buttons;
+	private int selected;
 
-	public RadioButtonGroup() {
+	public RadioButtonGroup(int selected) {
 		buttons = new ArrayList<>();
+		this.selected = selected;
 	}
 
 	public void add(RadioButton b) {
+		b.setInitially(buttons.size() == selected);
 		buttons.add(b);
 	}
 

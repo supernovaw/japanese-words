@@ -38,11 +38,11 @@ public class SceneModeWordsSelection extends Scene {
 		cardsModeButtons.setSelectedButton(0);
 		addElement(cardsModeButtons);
 
-		answerModesGroup = new RadioButtonGroup();
+		answerModesGroup = new RadioButtonGroup(0);
 		answerModeButtons = new RadioButton[ANSWER_MODES.length];
 		for (int i = 0; i < ANSWER_MODES.length; i++) {
 			Bounds b = new Bounds(-50, 170 + i * 40, 250, 40, 1, -1);
-			answerModeButtons[i] = new RadioButton(ANSWER_MODES[i], i == 0, answerModesGroup, this, b);
+			answerModeButtons[i] = new RadioButton(ANSWER_MODES[i], answerModesGroup, this, b);
 			addElement(answerModeButtons[i]);
 		}
 
