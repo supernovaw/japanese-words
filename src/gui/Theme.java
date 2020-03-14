@@ -19,7 +19,7 @@ public final class Theme {
 	private static Font UIFont;
 
 	static {
-		bgImage = Assets.loadImage("bg.jpg");
+		bgImage = Assets.loadImage("bg_airplane_wing.jpg");
 		fontEnglish = Assets.loadFont("SFProText-Light.ttf");
 		fontJapanese = Assets.loadFont("YuGothL.ttc");
 		UIFont = fontEnglish.deriveFont(UIFontsize);
