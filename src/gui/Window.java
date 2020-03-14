@@ -1,9 +1,6 @@
 package gui;
 
-import gui.scenes.SceneLearningWordMeaning;
-import gui.scenes.SceneLearningWordWriting;
-import gui.scenes.SceneMain;
-import gui.scenes.SceneModeWordsSelection;
+import gui.scenes.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -56,8 +53,10 @@ public final class Window {
 		Scene.sceneMain = new SceneMain(this);
 		Scene.sceneModeWordsSelection = new SceneModeWordsSelection(this);
 
-		Scene.sceneLearningWordWriting = new SceneLearningWordWriting(this);
+		Scene.sceneLearningCardIntroduction = new SceneLearningCardIntroduction(this);
 		Scene.sceneLearningWordMeaning = new SceneLearningWordMeaning(this);
+		Scene.sceneLearningWordReading = new SceneLearningWordReading(this);
+		Scene.sceneLearningWordWriting = new SceneLearningWordWriting(this);
 
 		scene = Scene.sceneMain;
 		scene.onDisplay();

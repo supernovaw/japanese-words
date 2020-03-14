@@ -1,5 +1,6 @@
 package recognition;
 
+import cards.Card;
 import cards.Cards;
 import main.Assets;
 
@@ -82,11 +83,13 @@ public final class Writings {
 		if (difference > CORRECT_ANSWER_THRESHOLD)
 			return false;
 
-		List<ComparisonResultEntry> results = new ArrayList<>(Cards.getCurrentSize());
+		List<Card> cards = Cards.getCurrentList();
+		List<ComparisonResultEntry> results = new ArrayList<>(cards.size());
 		results.add(new ComparisonResultEntry(word, difference));
-		Cards.forEachCurrent(card -> {
+
+		cards.forEach(card -> {
 			String w = card.getWord();
-			if (w.equals(word)) // if this is the already calculated value
+			if (ComparisonResultEntry.contains(results, w))
 				return;
 			double diff = getComparisonInfo(w).compareToWritten(answer);
 			results.add(new ComparisonResultEntry(w, diff));

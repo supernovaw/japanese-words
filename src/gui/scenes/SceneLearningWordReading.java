@@ -10,29 +10,30 @@ import gui.elements.Button;
 import gui.elements.Label;
 import gui.elements.TextField;
 
-public class SceneLearningWordMeaning extends LearningScene {
+public class SceneLearningWordReading extends LearningScene {
 	private CardsMode mode;
 
 	private Label wordLabel;
-	private TextField meaningInput;
+	private TextField readingInput;
 	private Label hint;
 
-	public SceneLearningWordMeaning(Window holder) {
+	public SceneLearningWordReading(Window holder) {
 		super(holder);
 
 		wordLabel = new Label("", Theme.getFontJapanese(), this, new Bounds(0, -100, 500, 200, 0, 0));
-		meaningInput = new TextField("Type word meaning here", this::handleInput, this, new Bounds(0, 50, 400, 60, 0, 0));
-		hint = new Label("", Theme.getFontEnglish(), this, new Bounds(0, 130, 500, 100, 0, 0));
+		readingInput = new TextField("Type word reading here", this::handleInput, this, new Bounds(0, 50, 400, 60, 0, 0));
+		readingInput.setKanaInput(true);
+		hint = new Label("", Theme.getFontJapanese(), this, new Bounds(0, 130, 500, 100, 0, 0));
 
 		addElement(wordLabel);
-		addElement(meaningInput);
+		addElement(readingInput);
 		addElement(hint);
 		addElement(new Button("Return", () -> changeScene(sceneMain), this, new Bounds(-65, -10, 125, 30, 1, 1)));
 	}
 
 	private void handleInput() {
-		String input = meaningInput.flushText();
-		boolean correct = input.equals(mode.getCurrent().getMeaning());
+		String input = readingInput.flushText();
+		boolean correct = input.equals(mode.getCurrent().getReading());
 		mode.next(this, correct);
 	}
 
@@ -47,19 +48,19 @@ public class SceneLearningWordMeaning extends LearningScene {
 
 	@Override
 	public void setCard(Card c) {
-		meaningInput.triggerFocus();
+		readingInput.triggerFocus();
 		wordLabel.setText(c.getWord());
 	}
 
 	@Override
 	public void changeCard(Card c) {
-		meaningInput.triggerFocus();
+		readingInput.triggerFocus();
 		wordLabel.changeText(c.getWord());
 		removeHint();
 	}
 
 	@Override
 	public void setHint(Card c) {
-		hint.changeText(c.getMeaning());
+		hint.changeText(c.getReading());
 	}
 }

@@ -108,12 +108,14 @@ public abstract class Element {
 
 	public static double alignStringX(Graphics2D g, String s, float x, float w, int align) {
 		switch (align) {
-			case -1: return x;
+			case -1:
+				return x;
 			case 0:
 				return x + (w - stringWidth(g, s)) / 2f;
 			case 1:
 				return x + w - stringWidth(g, s);
-			default: throw new IllegalArgumentException("for align " + align);
+			default:
+				throw new IllegalArgumentException("for align " + align);
 		}
 	}
 

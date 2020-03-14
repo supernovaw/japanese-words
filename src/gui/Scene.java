@@ -15,8 +15,10 @@ public abstract class Scene {
 	public static SceneMain sceneMain;
 	public static SceneModeWordsSelection sceneModeWordsSelection;
 
-	public static SceneLearningWordWriting sceneLearningWordWriting;
+	public static SceneLearningCardIntroduction sceneLearningCardIntroduction;
 	public static SceneLearningWordMeaning sceneLearningWordMeaning;
+	public static SceneLearningWordReading sceneLearningWordReading;
+	public static SceneLearningWordWriting sceneLearningWordWriting;
 
 	private static boolean displayElementsBounds = false; // for development only
 	private final Window holder;
@@ -79,7 +81,7 @@ public abstract class Scene {
 		return holder.getMousePosition();
 	}
 
-	protected final void changeScene(Scene s) {
+	public final void changeScene(Scene s) {
 		holder.changeScene(s);
 	}
 
