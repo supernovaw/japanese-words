@@ -12,14 +12,14 @@ import gui.elements.WordWritingArea;
 import recognition.Writings;
 import recognition.WrittenAnswer;
 
-public class SceneLearningWordWriting extends LearningScene {
+public class SceneLearningMeaningWriting extends LearningScene {
 	private CardsMode mode;
 
 	private Label meaning;
 	private WordWritingArea writingArea;
 	private Label hint;
 
-	public SceneLearningWordWriting(Window holder) {
+	public SceneLearningMeaningWriting(Window holder) {
 		super(holder);
 
 		meaning = new Label("", Theme.getFontEnglish(), this, new Bounds(0, -155, 700, 60, 0, 0));

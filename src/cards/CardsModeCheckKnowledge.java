@@ -21,7 +21,7 @@ public class CardsModeCheckKnowledge extends CardsMode {
 	/* The order of modes is:
 	 * Word - Meaning
 	 * Word - Reading
-	 * Word - Writing
+	 * Meaning - Writing
 	 */
 	@Override
 	public void next(LearningScene source, boolean correct) {
@@ -31,8 +31,8 @@ public class CardsModeCheckKnowledge extends CardsMode {
 			if (source instanceof SceneLearningWordMeaning) {
 				currentScene = Scene.sceneLearningWordReading;
 			} else if (source instanceof SceneLearningWordReading) {
-				currentScene = Scene.sceneLearningWordWriting;
-			} else { // the remaining case can only be SceneLearningWordWriting
+				currentScene = Scene.sceneLearningMeaningWriting;
+			} else { // the remaining case can only be SceneLearningMeaningWriting
 				finish(source);
 				return;
 			}
@@ -54,7 +54,7 @@ public class CardsModeCheckKnowledge extends CardsMode {
 	public void start(Scene from) {
 		Scene.sceneLearningWordMeaning.setMode(this);
 		Scene.sceneLearningWordReading.setMode(this);
-		Scene.sceneLearningWordWriting.setMode(this);
+		Scene.sceneLearningMeaningWriting.setMode(this);
 
 		from.changeScene(currentScene);
 		currentScene.setCard(cards.get(index));

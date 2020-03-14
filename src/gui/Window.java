@@ -56,7 +56,7 @@ public final class Window {
 		Scene.sceneLearningCardIntroduction = new SceneLearningCardIntroduction(this);
 		Scene.sceneLearningWordMeaning = new SceneLearningWordMeaning(this);
 		Scene.sceneLearningWordReading = new SceneLearningWordReading(this);
-		Scene.sceneLearningWordWriting = new SceneLearningWordWriting(this);
+		Scene.sceneLearningMeaningWriting = new SceneLearningMeaningWriting(this);
 
 		scene = Scene.sceneMain;
 		scene.onDisplay();

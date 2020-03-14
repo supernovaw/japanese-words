@@ -18,7 +18,7 @@ public abstract class Scene {
 	public static SceneLearningCardIntroduction sceneLearningCardIntroduction;
 	public static SceneLearningWordMeaning sceneLearningWordMeaning;
 	public static SceneLearningWordReading sceneLearningWordReading;
-	public static SceneLearningWordWriting sceneLearningWordWriting;
+	public static SceneLearningMeaningWriting sceneLearningMeaningWriting;
 
 	private static boolean displayElementsBounds = false; // for development only
 	private final Window holder;

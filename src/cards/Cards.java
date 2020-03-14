@@ -17,7 +17,7 @@ public class Cards {
 
 	public static final int ANSWER_MODE_WORD_MEANING = 0;
 	public static final int ANSWER_MODE_WORD_READING = 1;
-	public static final int ANSWER_MODE_WORD_WRITING = 2;
+	public static final int ANSWER_MODE_MEANING_WRITING = 2;
 
 	private static Map<String, List<Card>> wordsFiles;
 	private static List<String> filesList;
@@ -138,8 +138,8 @@ public class Cards {
 			case ANSWER_MODE_WORD_READING:
 				answerMode = Scene.sceneLearningWordReading;
 				break;
-			case ANSWER_MODE_WORD_WRITING:
-				answerMode = Scene.sceneLearningWordWriting;
+			case ANSWER_MODE_MEANING_WRITING:
+				answerMode = Scene.sceneLearningMeaningWriting;
 				break;
 			default:
 				throw new Error("Unknown answer mode " + Cards.answerMode);

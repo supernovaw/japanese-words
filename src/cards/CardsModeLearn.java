@@ -38,7 +38,7 @@ public class CardsModeLearn extends CardsMode {
 			for (int i = 0; i < LOOP_LEARNING; i++) {
 				schedule.add(new ScheduledCard(Scene.sceneLearningWordMeaning, c));
 				schedule.add(new ScheduledCard(Scene.sceneLearningWordReading, c));
-				schedule.add(new ScheduledCard(Scene.sceneLearningWordWriting, c));
+				schedule.add(new ScheduledCard(Scene.sceneLearningMeaningWriting, c));
 			}
 		}
 
@@ -57,7 +57,7 @@ public class CardsModeLearn extends CardsMode {
 		toShuffle.clear();
 		for (int i = 0; i < LOOP_REPEATING; i++)
 			for (Card c : cards)
-				toShuffle.add(new ScheduledCard(Scene.sceneLearningWordWriting, c));
+				toShuffle.add(new ScheduledCard(Scene.sceneLearningMeaningWriting, c));
 		schedule.addAll(Cards.shuffle(toShuffle));
 	}
 
@@ -93,7 +93,7 @@ public class CardsModeLearn extends CardsMode {
 		Scene.sceneLearningCardIntroduction.setMode(this);
 		Scene.sceneLearningWordMeaning.setMode(this);
 		Scene.sceneLearningWordReading.setMode(this);
-		Scene.sceneLearningWordWriting.setMode(this);
+		Scene.sceneLearningMeaningWriting.setMode(this);
 
 		ScheduledCard current = schedule.get(index);
 		from.changeScene(current.scene);
