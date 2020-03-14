@@ -2,11 +2,9 @@ package gui;
 
 import main.Assets;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.io.FileInputStream;
 
 public final class Theme {
 	private static Color background = Color.black, foreground = Color.white;
@@ -57,6 +55,10 @@ public final class Theme {
 
 	public static Font getFontJapanese() {
 		return fontJapanese;
+	}
+
+	public static Font getFontEnglish() {
+		return fontEnglish;
 	}
 
 	public static void paintBackground(Graphics2D g, Dimension screen) {
