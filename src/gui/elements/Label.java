@@ -43,6 +43,12 @@ public class Label extends Element {
 		text = newText;
 	}
 
+	// changes text of this label immediately with no animation
+	public void setText(String newText) {
+		textArea = null; // cause it to be updated on the next repaint
+		text = newText;
+	}
+
 	@Override
 	protected void paint(Graphics2D g) {
 		g.setFont(font);
