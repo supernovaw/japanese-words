@@ -26,15 +26,17 @@ public class WordWritingArea extends Element {
 	// used to detect whether or not the mouse started dragging from within the bounds
 	private boolean writingCurrently;
 	private List<List<Point2D>> writtenWord;
+	private Runnable onWritingReturned;
 
 	// strokeRemove has object parameters List<Point2D> (path), double[] (lengths), double (total length)
 	private OneWayAnimating strokeRemove;
 	// writingRemove has object parameters List<List<Point2D>>, double[][], double[] (as in strokeRemove)
 	private OneWayAnimating writingRemove;
 
-	public WordWritingArea(Scene container, Bounds bounds) {
+	public WordWritingArea(Runnable onWritingReturned, Scene container, Bounds bounds) {
 		super(container, bounds);
 		writtenWord = new ArrayList<>();
+		this.onWritingReturned = onWritingReturned;
 
 		float strokeWidth = 4f;
 		expandRepaint = (int) Math.ceil(strokeWidth / 2f);
@@ -137,13 +139,6 @@ public class WordWritingArea extends Element {
 		return path;
 	}
 
-	private void proceed() {
-		WrittenAnswer ans = new WrittenAnswer(flushWriting());
-
-		writtenWord.clear();
-		repaintExp();
-	}
-
 	private void removeStroke() {
 		if (writtenWord.isEmpty())
 			return;
@@ -164,9 +159,9 @@ public class WordWritingArea extends Element {
 	}
 
 	// removes all strokes and starts the animation
-	private List<List<Point2D>> flushWriting() {
+	public WrittenAnswer flushWriting() {
 		if (writtenWord.isEmpty())
-			return new ArrayList<>();
+			return new WrittenAnswer(Collections.emptyList());
 		List<List<Point2D>> removed = new ArrayList<>(writtenWord.size());
 		for (List<Point2D> stroke : writtenWord)
 			removed.add(Curves.smooth(stroke, CURVE_PARTS_PRECISION));
@@ -185,7 +180,7 @@ public class WordWritingArea extends Element {
 		}
 
 		writingRemove.animate(removed, lengths, totalLengths);
-		return removed;
+		return new WrittenAnswer(removed);
 	}
 
 	@Override
@@ -201,7 +196,7 @@ public class WordWritingArea extends Element {
 			writingCurrently = true;
 		} else if (SwingUtilities.isMiddleMouseButton(e)) {
 			if (!writingCurrently)
-				proceed();
+				onWritingReturned.run();
 		} else if (SwingUtilities.isRightMouseButton(e)) {
 			removeStroke();
 		}
