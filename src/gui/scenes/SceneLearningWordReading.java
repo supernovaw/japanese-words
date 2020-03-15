@@ -1,6 +1,7 @@
 package gui.scenes;
 
 import cards.Card;
+import cards.Cards;
 import cards.CardsMode;
 import cards.LearningScene;
 import gui.Bounds;
@@ -33,7 +34,8 @@ public class SceneLearningWordReading extends LearningScene {
 
 	private void handleInput() {
 		String input = readingInput.flushText();
-		boolean correct = input.equals(mode.getCurrent().getReading());
+		String word = mode.getCurrent().getWord();
+		boolean correct = Cards.isReadingCorrect(input, word);
 		mode.next(this, correct);
 	}
 

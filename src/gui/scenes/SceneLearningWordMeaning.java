@@ -1,6 +1,7 @@
 package gui.scenes;
 
 import cards.Card;
+import cards.Cards;
 import cards.CardsMode;
 import cards.LearningScene;
 import gui.Bounds;
@@ -32,7 +33,8 @@ public class SceneLearningWordMeaning extends LearningScene {
 
 	private void handleInput() {
 		String input = meaningInput.flushText();
-		boolean correct = input.equals(mode.getCurrent().getMeaning());
+		String word = mode.getCurrent().getWord();
+		boolean correct = Cards.isMeaningCorrect(input, word);
 		mode.next(this, correct);
 	}
 

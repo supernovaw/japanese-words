@@ -90,6 +90,37 @@ public class Cards {
 		return selectedFiles;
 	}
 
+	/* Some cards may have the same words (i.e. 年 as ねん and
+	 * 年 as とし). This method checks if a meaning corresponds
+	 * to any of cards with a given word.
+	 */
+	public static boolean isMeaningCorrect(String meaningInput, String word) {
+		// iterate over cards with the same word (usually, only 1 is found)
+		for (Card c : currentList) {
+			if (c.getWord().equals(word)) {
+				if (meaningsMatch(meaningInput, c.getMeaning()))
+					return true;
+			}
+		}
+		return false;
+	}
+
+	private static boolean meaningsMatch(String m1, String m2) {
+		return m1.trim().equalsIgnoreCase(m2.trim());
+	}
+
+	// similar to isMeaningCorrect, but checks reading
+	public static boolean isReadingCorrect(String readingInput, String word) {
+		// iterate over cards with the same word (usually, only 1 is found)
+		for (Card c : currentList) {
+			if (c.getWord().equals(word)) {
+				if (readingInput.equals(c.getReading()))
+					return true;
+			}
+		}
+		return false;
+	}
+
 	/* When applying resets the current mode (if it's a
 	 * test, for instance) a warning should be displayed
 	 */
