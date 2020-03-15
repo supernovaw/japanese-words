@@ -143,7 +143,12 @@ public class WordWritingArea extends Element {
 		if (writtenWord.isEmpty())
 			return;
 
+		writingCurrently = false;
 		List<Point2D> removedStroke = writtenWord.remove(writtenWord.size() - 1);
+
+		if (removedStroke.size() < 2)
+			return;
+
 		removedStroke = Curves.smooth(removedStroke, CURVE_PARTS_PRECISION);
 		double[] distances = new double[removedStroke.size()];
 		double totalStrokeLength = 0;
@@ -151,9 +156,6 @@ public class WordWritingArea extends Element {
 			distances[i] = removedStroke.get(i - 1).distance(removedStroke.get(i));
 			totalStrokeLength += distances[i];
 		}
-
-		if (writingCurrently)
-			writingCurrently = false;
 
 		strokeRemove.animate(removedStroke, distances, totalStrokeLength);
 	}
