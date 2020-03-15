@@ -54,9 +54,7 @@ public class Label extends Element {
 		g.setFont(font);
 
 		if (textArea == null) {
-			double textX = alignStringX(g, text, 0, w(), alignHorizontal);
-			double textY = centerStringY(g, h() / 2);
-			textArea = getTextArea(text, textX, textY, g);
+			textArea = getTextArea(text, g);
 		}
 
 		int tx = x(), ty = y();
@@ -73,16 +71,34 @@ public class Label extends Element {
 
 			Object textParameter = textChangeAnimate.getParameter(0);
 			if (textParameter instanceof String) {
-				String s = (String) textParameter;
-				double textX = alignStringX(g, s, 0, w(), alignHorizontal);
-				double textY = centerStringY(g, h() / 2);
-				textParameter = getTextArea(text, textX, textY, g);
+				textParameter = getTextArea((String) textParameter, g);
 				textChangeAnimate.setParameter(0, textParameter);
 			}
 			g.fill((Area) textParameter);
 		}
 
 		g.translate(-tx, -ty);
+	}
+
+	private Area getTextArea(String text, Graphics2D g) {
+		int w = g.getFontMetrics().stringWidth(text);
+		int fitW = w() - 10;
+		if (w > fitW) {
+			float oldSize = g.getFont().getSize2D();
+			float scale = (float) fitW / w;
+			g.setFont(g.getFont().deriveFont(oldSize * scale));
+
+			double textX = alignStringX(g, text, 0, w(), alignHorizontal);
+			double textY = centerStringY(g, h() / 2);
+			Area result = getTextArea(text, textX, textY, g);
+
+			g.setFont(g.getFont().deriveFont(oldSize));
+			return result;
+		} else {
+			double textX = alignStringX(g, text, 0, w(), alignHorizontal);
+			double textY = centerStringY(g, h() / 2);
+			return getTextArea(text, textX, textY, g);
+		}
 	}
 
 	@Override
