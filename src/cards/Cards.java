@@ -175,6 +175,17 @@ public class Cards {
 		return result;
 	}
 
+	/* Moves src elements to dst with making sure that the
+	 * first added element will not be the same as the last
+	 * element in dst (if there are any).
+	 */
+	static <T> void addShuffled(List<T> src, List<T> dst) {
+		if (!dst.isEmpty())
+			dst.add(src.remove(getRandom(src, dst.get(dst.size() - 1))));
+		while (!src.isEmpty())
+			dst.add(src.remove((int) (Math.random() * src.size())));
+	}
+
 	/* Returns the index of a random element from list with
 	 * making sure that the chosen one will not be 'exclude'
 	 */

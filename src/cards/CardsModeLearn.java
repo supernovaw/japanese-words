@@ -43,22 +43,23 @@ public class CardsModeLearn extends CardsMode {
 		}
 
 		List<ScheduledCard> toShuffle = new ArrayList<>();
-		for (int i = 0; i < LOOP_REPEATING; i++)
+		for (int i = 0; i < LOOP_REPEATING; i++) {
 			for (Card c : cards)
 				toShuffle.add(new ScheduledCard(Scene.sceneLearningWordMeaning, c));
-		schedule.addAll(Cards.shuffle(toShuffle));
+			Cards.addShuffled(toShuffle, schedule);
+		}
 
-		toShuffle.clear();
-		for (int i = 0; i < LOOP_REPEATING; i++)
+		for (int i = 0; i < LOOP_REPEATING; i++) {
 			for (Card c : cards)
 				toShuffle.add(new ScheduledCard(Scene.sceneLearningWordReading, c));
-		schedule.addAll(Cards.shuffle(toShuffle));
+			Cards.addShuffled(toShuffle, schedule);
+		}
 
-		toShuffle.clear();
-		for (int i = 0; i < LOOP_REPEATING; i++)
+		for (int i = 0; i < LOOP_REPEATING; i++) {
 			for (Card c : cards)
 				toShuffle.add(new ScheduledCard(Scene.sceneLearningMeaningWriting, c));
-		schedule.addAll(Cards.shuffle(toShuffle));
+			Cards.addShuffled(toShuffle, schedule);
+		}
 	}
 
 	@Override
