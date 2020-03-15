@@ -6,6 +6,7 @@ import recognition.WrittenAnswer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
@@ -237,6 +238,14 @@ public class WordWritingArea extends Element {
 			writingCurrently = false; // stop reacting to dragging (finish writing this stroke)
 		}
 		repaintExp();
+	}
+
+	@Override
+	protected void keyPressed(KeyEvent e) {
+		if (e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_ENTER) {
+			if (!writingCurrently)
+				onWritingReturned.run();
+		}
 	}
 
 	private void repaintExp() {
