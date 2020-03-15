@@ -22,9 +22,9 @@ public class SceneLearningMeaningWriting extends LearningScene {
 	public SceneLearningMeaningWriting(Window holder) {
 		super(holder);
 
-		meaning = new Label("", Theme.getFontEnglish(), this, new Bounds(0, -155, 700, 60, 0, 0));
-		writingArea = new WordWritingArea(this::handleInput, this, new Bounds(0, 0, 700, 250, 0, 0));
-		hint = new Label("", Theme.getFontJapanese(), this, new Bounds(0, 175, 500, 100, 0, 0));
+		meaning = new Label("", Theme.getFontEnglish(), this, new Bounds(0, -225, 1000, 150, 0, 0));
+		writingArea = new WordWritingArea(this::handleInput, this, new Bounds(0, 25, 1000, 350, 0, 0));
+		hint = new Label("", Theme.getFontJapanese(), this, new Bounds(0, 250, 1000, 100, 0, 0));
 
 		addElement(meaning);
 		addElement(writingArea);

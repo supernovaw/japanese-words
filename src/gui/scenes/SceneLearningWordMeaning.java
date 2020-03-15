@@ -20,9 +20,9 @@ public class SceneLearningWordMeaning extends LearningScene {
 	public SceneLearningWordMeaning(Window holder) {
 		super(holder);
 
-		wordLabel = new Label("", Theme.getFontJapanese(), this, new Bounds(0, -100, 500, 200, 0, 0));
-		meaningInput = new TextField("Type word meaning here", this::handleInput, this, new Bounds(0, 50, 400, 60, 0, 0));
-		hint = new Label("", Theme.getFontEnglish(), this, new Bounds(0, 130, 500, 100, 0, 0));
+		wordLabel = new Label("", Theme.getFontJapanese(), this, new Bounds(0, -80, 1000, 300, 0, 0));
+		meaningInput = new TextField("Type word meaning here", this::handleInput, this, new Bounds(0, 100, 400, 60, 0, 0));
+		hint = new Label("", Theme.getFontEnglish(), this, new Bounds(0, 180, 1000, 100, 0, 0));
 
 		addElement(wordLabel);
 		addElement(meaningInput);
