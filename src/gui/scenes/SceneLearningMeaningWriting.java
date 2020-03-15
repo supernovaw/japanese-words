@@ -51,6 +51,7 @@ public class SceneLearningMeaningWriting extends LearningScene {
 	@Override
 	public void changeCard(Card c) {
 		meaning.changeText(c.getMeaning());
+		removeHint();
 	}
 
 	@Override
