@@ -206,6 +206,17 @@ public class Cards {
 		return result;
 	}
 
+	static <T> List<T> shuffleUnbiased(List<T> list) {
+		List<T> listCopy = new ArrayList<>(list);
+		List<T> result = new ArrayList<>();
+
+		while (!listCopy.isEmpty()) {
+			int i = (int) (Math.random() * listCopy.size());
+			result.add(listCopy.remove(i));
+		}
+		return result;
+	}
+
 	/* Moves src elements to dst with making sure that the
 	 * first added element will not be the same as the last
 	 * element in dst (if there are any).
