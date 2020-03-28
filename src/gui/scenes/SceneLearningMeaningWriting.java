@@ -15,6 +15,7 @@ import recognition.WrittenAnswer;
 public class SceneLearningMeaningWriting extends LearningScene {
 	private CardsMode mode;
 
+	private Label reading;
 	private Label meaning;
 	private WordWritingArea writingArea;
 	private Label hint;
@@ -22,10 +23,12 @@ public class SceneLearningMeaningWriting extends LearningScene {
 	public SceneLearningMeaningWriting(Window holder) {
 		super(holder);
 
-		meaning = new Label("", Theme.getFontEnglish(), this, new Bounds(0, -225, 1000, 150, 0, 0));
-		writingArea = new WordWritingArea(this::handleInput, this, new Bounds(0, 25, 1000, 350, 0, 0));
-		hint = new Label("", Theme.getFontJapanese(), this, new Bounds(0, 250, 1000, 100, 0, 0));
+		reading = new Label("", Theme.getFontJapanese(), this, new Bounds(0, -275, 1000, 100, 0, 0));
+		meaning = new Label("", Theme.getFontEnglish(), this, new Bounds(0, -175, 1000, 150, 0, 0));
+		writingArea = new WordWritingArea(this::handleInput, this, new Bounds(0, 75, 1000, 350, 0, 0));
+		hint = new Label("", Theme.getFontJapanese(), this, new Bounds(0, 300, 1000, 100, 0, 0));
 
+		addElement(reading);
 		addElement(meaning);
 		addElement(writingArea);
 		addElement(hint);
@@ -45,11 +48,13 @@ public class SceneLearningMeaningWriting extends LearningScene {
 
 	@Override
 	public void setCard(Card c) {
+		reading.setText(c.getReading());
 		meaning.setText(c.getMeaning());
 	}
 
 	@Override
 	public void changeCard(Card c) {
+		reading.changeText(c.getReading());
 		meaning.changeText(c.getMeaning());
 		removeHint();
 	}

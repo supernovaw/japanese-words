@@ -14,6 +14,7 @@ import gui.elements.TextField;
 public class SceneLearningWordReading extends LearningScene {
 	private CardsMode mode;
 
+	private Label meaningLabel;
 	private Label wordLabel;
 	private TextField readingInput;
 	private Label hint;
@@ -21,11 +22,13 @@ public class SceneLearningWordReading extends LearningScene {
 	public SceneLearningWordReading(Window holder) {
 		super(holder);
 
+		meaningLabel = new Label("", Theme.getFontEnglish(), this, new Bounds(0, -280, 1000, 100, 0, 0));
 		wordLabel = new Label("", Theme.getFontJapanese(), this, new Bounds(0, -80, 1000, 300, 0, 0));
 		readingInput = new TextField("Type word reading here", this::handleInput, this, new Bounds(0, 100, 400, 60, 0, 0));
 		readingInput.setKanaInput(true);
 		hint = new Label("", Theme.getFontJapanese(), this, new Bounds(0, 180, 1000, 100, 0, 0));
 
+		addElement(meaningLabel);
 		addElement(wordLabel);
 		addElement(readingInput);
 		addElement(hint);
@@ -50,12 +53,14 @@ public class SceneLearningWordReading extends LearningScene {
 
 	@Override
 	public void setCard(Card c) {
+		meaningLabel.setText(c.getMeaning());
 		readingInput.triggerFocus();
 		wordLabel.setText(c.getWord());
 	}
 
 	@Override
 	public void changeCard(Card c) {
+		meaningLabel.changeText(c.getMeaning());
 		readingInput.triggerFocus();
 		wordLabel.changeText(c.getWord());
 		removeHint();
