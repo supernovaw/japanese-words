@@ -36,16 +36,18 @@ public class CardsModeMaster extends CardsMode {
 				cards.remove(index);
 				index--;
 			}
+
+			index++;
+			if (index == cards.size()) {
+				cards = Cards.shuffle(cards);
+				index = 0;
+			}
+
+			sceneType.changeCard(cards.get(index).card);
 		} else {
 			current.correctAnswersStreak = 0;
+			sceneType.setHint(current.card);
 		}
-		index++;
-		if (index == cards.size()) {
-			cards = Cards.shuffle(cards);
-			index = 0;
-		}
-
-		sceneType.changeCard(cards.get(index).card);
 	}
 
 	private void finish(LearningScene source) {
